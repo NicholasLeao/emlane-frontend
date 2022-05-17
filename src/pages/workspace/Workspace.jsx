@@ -1,12 +1,10 @@
 import styled from "styled-components";
 import Canvas from "../../components/Canvas";
-import Navbar from "../../components/Navbar";
 import Sidebar from "../../components/Sidebar";
 
 function Workspace() {
   return (
     <StyledDiv>
-      <Navbar />
       <div className="work-area">
         <Sidebar />
         <Canvas />
@@ -18,7 +16,7 @@ function Workspace() {
 export default Workspace;
 
 const StyledDiv = styled.div`
-  height: 100vh;
+  height: auto;
   width: 100vw;
   overflow-x: hidden;
   overflow-y: hidden;
@@ -26,7 +24,8 @@ const StyledDiv = styled.div`
   & .work-area {
     background-color: #e6e6e6;
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh);
+    margin-top: 100px;
     overflow-x: hidden;
     overflow-y: hidden;
     padding: 0;
