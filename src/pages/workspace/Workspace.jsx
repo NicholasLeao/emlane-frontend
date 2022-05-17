@@ -7,7 +7,7 @@ function Workspace() {
     <StyledDiv>
       <div className="work-area">
         <Sidebar />
-        <Canvas />
+        <Canvas></Canvas>
       </div>
     </StyledDiv>
   );

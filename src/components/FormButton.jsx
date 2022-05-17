@@ -5,7 +5,7 @@ function FormButton(props) {
     <StyledContainer>
       <button
         name={props.nameProperty}
-        onClick={props.clickHandler}
+        onClick={props.onClick}
         className={`${props.theme}`}
       >
         {props.children}

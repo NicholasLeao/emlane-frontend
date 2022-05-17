@@ -1,7 +1,6 @@
-import Canvas from "../../components/Canvas";
 import styled from "styled-components";
-import FormInput from "../../components/FormInput";
-import FormButton from "../../components/FormButton";
+import FormInput from "./FormInput";
+import FormButton from "./FormButton";
 import { motion } from "framer-motion";
 
 function Login() {
@@ -14,8 +13,6 @@ function Login() {
           boxShadow: "3px 5px 0px 1px #000000",
         }}
         whileHover={{
-          x: -3,
-          y: -3,
           boxShadow: "8px 7px 0px 1px #000000",
           borderRadius: "12px",
           transition: { duration: 1 },
@@ -74,6 +71,11 @@ const StyledDiv = styled.div`
   margin: auto;
   box-sizing: border-box;
   display: flex;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
   & p {
     margin-top: 15px;

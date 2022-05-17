@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import FormButton from "../../components/FormButton";
+import { useState, useEffect, useCallback } from "react";
 
 function Home() {
+
   return (
     <StyledDiv>
       <section className="hero">

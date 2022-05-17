@@ -1,38 +1,81 @@
 import styled from "styled-components";
 import FormButton from "./FormButton";
+import { Link } from "react-router-dom";
+import { useState, useEffect, useCallback } from "react";
+import Login from "./Login";
+import Signup from "./Signup";
 
 const NavLoggedIn = () => (
   <ul>
     <li>
-      <FormButton>Lanes</FormButton>
+      <Link to="/workspace">
+        <FormButton>Workspace</FormButton>
+      </Link>
+    </li>
+    <li>
+      <Link to="/lanes">
+        <FormButton>Lanes</FormButton>
+      </Link>
     </li>
     <li>
       <FormButton theme="red">Signout</FormButton>
     </li>
   </ul>
 );
-const NavLoggedOut = () => (
+const NavLoggedOut = (props) => (
   <ul>
     <li>
       <FormButton>English ▼</FormButton>
     </li>
     <li>
-      <FormButton>Log in</FormButton>
+      <FormButton onClick={props.loginHandler}>Log in</FormButton>
     </li>
     <li>
-      <FormButton theme="purple">Signup</FormButton>
+      <FormButton onClick={props.signupHandler} theme="purple">
+        Signup
+      </FormButton>
     </li>
   </ul>
 );
 
 function Navbar() {
+  //  Logged in status ====================================================
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const toggleLogin = () => setIsLoggedIn((s) => !s);
+  //  Login modal =========================================================
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const toggleLoginModal = () => {
+    if (signupModalOpen) toggleSignupModal();
+    setLoginModalOpen((s) => !s);
+  };
+  //  Signup modal =========================================================
+  const [signupModalOpen, setSignupModalOpen] = useState(false);
+  const toggleSignupModal = () => {
+    if (loginModalOpen) toggleLoginModal();
+    setSignupModalOpen((s) => !s);
+  };
+
+  //  JSX =================================================================
   return (
-    <StyledNav>
-      <h2>emlane</h2>
-      <div className="ui-ul">
-        <NavLoggedIn />
-      </div>
-    </StyledNav>
+    <>
+      {loginModalOpen && <Login />}
+      {signupModalOpen && <Signup />}
+      <StyledNav>
+        <Link to="/">
+          <h2>emlane</h2>
+        </Link>
+        <div className="ui-ul">
+          {isLoggedIn ? (
+            <NavLoggedIn />
+          ) : (
+            <NavLoggedOut
+              loginHandler={toggleLoginModal}
+              signupHandler={toggleSignupModal}
+            />
+          )}
+        </div>
+      </StyledNav>
+    </>
   );
 }
 
@@ -62,6 +105,7 @@ const StyledNav = styled.nav`
     }
     & li {
       list-style: none;
+      text-decoration: none;
     }
     & button {
       height: 30px;

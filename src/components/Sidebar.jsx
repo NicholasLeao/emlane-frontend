@@ -45,26 +45,19 @@ const StyledNav = styled.nav`
 
   height: 100%;
   width: auto;
-  padding: 0;
   overflow-x: hidden;
-
   margin: 0;
-
+  box-sizing: border-box;
   background-color: white;
   border: 4px solid black;
-  box-sizing: border-box;
-
   padding: 0 10px;
+
   & .side-menu {
     width: 5px;
     height: 100%;
-    margin: 0;
-    padding: 0;
   }
 
   & .lane-nav {
-    border: 2px solid red;
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -73,16 +66,20 @@ const StyledNav = styled.nav`
     & li {
       width: 28px;
       height: 28px;
-      border-radius: 50%;
+      border-radius: 20%;
+      transform: rotate(45deg);
       margin: 25px 0 0 0;
 
-      background-color: white;
-      border: 2px solid #6b336b;
+      background-color: #8f6fe9;
+      border: 2px solid #000000;
+
+      box-sizing: border-box;
 
       list-style: none;
       cursor: pointer;
     }
   }
+
   /* Hide scrollbar for Chrome, Safari and Opera */
   &::-webkit-scrollbar {
     display: none;
