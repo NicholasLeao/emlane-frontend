@@ -1,21 +1,36 @@
 import styled from "styled-components";
+import FormButton from "./FormButton";
+
+const NavLoggedIn = () => (
+  <ul>
+    <li>
+      <FormButton>Lanes</FormButton>
+    </li>
+    <li>
+      <FormButton theme="red">Signout</FormButton>
+    </li>
+  </ul>
+);
+const NavLoggedOut = () => (
+  <ul>
+    <li>
+      <FormButton>English ▼</FormButton>
+    </li>
+    <li>
+      <FormButton>Log in</FormButton>
+    </li>
+    <li>
+      <FormButton theme="purple">Signup</FormButton>
+    </li>
+  </ul>
+);
 
 function Navbar() {
   return (
     <StyledNav>
       <h2>emlane</h2>
       <div className="ui-ul">
-        <ul>
-          <li>
-            <button>+</button>
-          </li>
-          <li>
-            <button>+</button>
-          </li>
-          <li>
-            <button>+</button>
-          </li>
-        </ul>
+        <NavLoggedIn />
       </div>
     </StyledNav>
   );
@@ -53,7 +68,6 @@ const StyledNav = styled.nav`
       padding: 15px;
       margin-left: 15px;
 
-      border: 4px solid black;
       box-sizing: border-box;
       font-size: large;
 
