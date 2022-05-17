@@ -4,8 +4,9 @@ import FormButton from "./FormButton";
 import { motion } from "framer-motion";
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 function Login() {
+  const navigate  = useNavigate();
   //  Form change handler =================================================
   const [formState, setFormState] = useState({
     email: "",
@@ -19,7 +20,6 @@ function Login() {
         [e.target.name]: e.target.value,
       };
     });
-    // console.log(formState);
   };
 
   //  Form submit handler =================================================
@@ -33,12 +33,17 @@ function Login() {
   const postSubmitState = useCallback(async () => {
     if (!formSubmitState.email) return;
     const response = await axios.post(
-      "http://127.0.0.1/8000/users/login",
+      "http://127.0.0.1:8000/users/login",
       formSubmitState
     );
-    console.log("FORM STATE 😄", formSubmitState);
-    console.log(response);
-  }, [formSubmitState]);
+
+    if (response.status === 201) {
+      // HANDLE TOKEN
+      response.data.token && console.log(response.data.token);
+      // NAVIGATE
+      navigate ("/hey");
+    }
+  }, [formSubmitState, navigate ]);
 
   useEffect(() => {
     postSubmitState();
@@ -80,7 +85,6 @@ function Login() {
           <FormButton
             onClick={submitHandler}
             nameProperty="confirm"
-            onChange={""}
             coloured={true}
           >
             Confirm
@@ -116,6 +120,5 @@ const StyledDiv = styled.div`
     width: 350px;
     padding: 35px 20px 40px 20px;
     border-radius: 12px;
-    /* box-shadow: 3px 5px 0px 1px #000000; */
   }
 `;

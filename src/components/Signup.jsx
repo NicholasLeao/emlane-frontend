@@ -2,8 +2,56 @@ import styled from "styled-components";
 import FormInput from "./FormInput";
 import FormButton from "./FormButton";
 import { motion } from "framer-motion";
+import { useState, useEffect, useCallback } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
+  //  Form change handler =================================================
+  const [formState, setFormState] = useState({
+    name: "",
+    email: "",
+    password: "",
+    passwordConfirm: "",
+  });
+  //  Form submit handler =================================================
+  const [formSubmitState, setFormSubmitState] = useState({});
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    setFormSubmitState(formState);
+  };
+
+  const postSubmitState = useCallback(async () => {
+    if (!formSubmitState.email) return;
+
+    const response = await axios.post(
+      "http://127.0.0.1:8000/users/signup",
+      formSubmitState
+    );
+
+    if (response.status === 200) {
+      // HANDLE TOKEN
+      response.data.token && console.log(response.data.token);
+      // NAVIGATE
+      navigate("/hey");
+    }
+  }, [formSubmitState, navigate]);
+
+  useEffect(() => {
+    postSubmitState();
+  }, [formSubmitState, postSubmitState]);
+  //  JSX =================================================================
+  const changeHandler = (e) => {
+    setFormState((prev) => {
+      return {
+        ...prev,
+        [e.target.name]: e.target.value,
+      };
+    });
+  };
+
   return (
     <>
       <StyledDiv
@@ -24,35 +72,39 @@ function Login() {
             valueName="Email"
             placeholder="evangelion1978@uol.com.br"
             inputType="email"
-            changeHandler={""}
-            valueState={""}
+            changeHandler={changeHandler}
+            valueState={formState.email}
           />
           <FormInput
-            nameProperty="username"
+            nameProperty="name"
             valueName="Username"
             placeholder="NickLeao"
             inputType="text"
-            changeHandler={""}
-            valueState={""}
+            changeHandler={changeHandler}
+            valueState={formState.name}
           />
           <FormInput
             nameProperty="password"
             valueName="Password"
             placeholder=""
             inputType="password"
-            changeHandler={""}
-            valueState={""}
+            changeHandler={changeHandler}
+            valueState={formState.password}
           />
           <FormInput
             nameProperty="passwordConfirm"
             valueName="Confirm Password"
             placeholder=""
             inputType="password"
-            changeHandler={""}
-            valueState={""}
+            changeHandler={changeHandler}
+            valueState={formState.passwordConfirm}
           />
 
-          <FormButton nameProperty="confirm" onChange={""} coloured={true}>
+          <FormButton
+            nameProperty="confirm"
+            onClick={submitHandler}
+            coloured={true}
+          >
             Confirm
           </FormButton>
 
