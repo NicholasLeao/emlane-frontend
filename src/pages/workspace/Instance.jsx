@@ -16,6 +16,7 @@ const StyledDiv = styled.div`
   width: 100%;
   border-radius: 8px;
   /* height: 150px; */
+  
 
   & .instance {
     width: 100%;
@@ -25,5 +26,6 @@ const StyledDiv = styled.div`
     box-sizing: border-box;
     padding: 10px 15px;
     box-shadow: 3px 3px 0px 1px #000000;
+    
   }
 `;

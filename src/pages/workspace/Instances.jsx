@@ -3,14 +3,14 @@ import Instance from "./Instance";
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
-function Instances() {
-  //  Instace fetch =========================================================
+function Instances(props) {
+  //  Instance fetch =========================================================
   const [instanceArray, setInstanceArray] = useState([]);
 
   const fetchInstances = useCallback(async () => {
     try {
       const response = await axios.get(
-        "http://127.0.0.1:8000/engrams/children/62836a5e4f000875e0494ffd"
+        `http://127.0.0.1:8000/engrams/children/${props.engramId}`
       );
       if (response) {
         setInstanceArray(response.data.children);
@@ -18,7 +18,7 @@ function Instances() {
     } catch (err) {
       console.log(err);
     }
-  }, []);
+  }, [props.engramId]);
 
   useEffect(() => {
     fetchInstances();
@@ -37,7 +37,7 @@ function Instances() {
 export default Instances;
 
 const StyledDiv = styled.div`
-  border: 4px solid red;
+  /* border: 4px solid red; */
   background-color: rgba(0, 0, 0, 0);
   z-index: 2;
   width: 650px;
@@ -50,12 +50,11 @@ const StyledDiv = styled.div`
   flex-direction: column;
   gap: 15px;
 
-  /* Hide scrollbar for Chrome, Safari and Opera */
   &::-webkit-scrollbar {
     display: none;
   }
   & {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 `;

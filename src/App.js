@@ -19,7 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
-          path="/workspace"
+          path="/workspace/:id"
           element={<AuthRoute component={Workspace} />}
         />
         <Route path="/lanes" element={<AuthRoute component={<></>} />} />

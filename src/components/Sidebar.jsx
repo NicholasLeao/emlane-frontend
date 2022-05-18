@@ -1,19 +1,21 @@
 import styled from "styled-components";
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
-
+import SidebarNode from "../pages/workspace/SidebarNode";
+import { motion } from "framer-motion";
 function Sidebar() {
   //  Fetch lane array ====================================================
-  const [laneState, setLaneState] = useState([]);
+  const [laneArray, setLaneArray] = useState([]);
   const fetchLaneHandler = useCallback(async () => {
     const response = await axios.get(
-      `http://127.0.0.1:8000/engrams/children/62836a5e4f000875e0494ffd`
+      `http://127.0.0.1:8000/lanes/children/6285067d0edff6f1dec94047`
     );
-    setLaneState(response.data.engram.children);
+    setLaneArray(response.data.children);
+    console.log("🌑", response.data);
   }, []);
 
   useEffect(() => {
-    // fetchLaneHandler();
+    fetchLaneHandler();
   }, [fetchLaneHandler]);
 
   // JSX ==================================================================
@@ -21,8 +23,8 @@ function Sidebar() {
     <StyledNav>
       <nav className="lane-nav">
         <ul>
-          {laneState.map((el, idx) => (
-            <li key={`li_${Math.random()}`}></li>
+          {laneArray.map((el, idx) => (
+            <SidebarNode engramEl={el} idx={idx} key={`li_${Math.random()}`}></SidebarNode>
           ))}
         </ul>
       </nav>
@@ -48,6 +50,7 @@ const StyledNav = styled.nav`
   border: 4px solid black;
   padding: 0 10px;
   z-index: 2;
+  padding-top: 60px;
 
   & .side-menu {
     width: 5px;
@@ -60,7 +63,7 @@ const StyledNav = styled.nav`
     align-items: center;
     justify-content: center;
 
-    & li {
+    /* & li {
       width: 28px;
       height: 28px;
       border-radius: 20%;
@@ -74,7 +77,7 @@ const StyledNav = styled.nav`
 
       list-style: none;
       cursor: pointer;
-    }
+    } */
   }
 
   /* Hide scrollbar for Chrome, Safari and Opera */

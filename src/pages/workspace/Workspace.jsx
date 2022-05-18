@@ -3,15 +3,18 @@ import Canvas from "../../components/Canvas";
 import Sidebar from "../../components/Sidebar";
 import FloatingMenu from "./FloatingMenu";
 import Instances from "./Instances";
+import { useParams } from "react-router-dom";
 
 function Workspace() {
+  const { id } = useParams();
+  console.log("🍌", id);
   return (
     <StyledDiv>
       <div className="work-area">
         <Sidebar />
         <Canvas>
           <FloatingMenu />
-          <Instances />
+          <Instances engramId={id} />
         </Canvas>
       </div>
     </StyledDiv>
@@ -25,10 +28,8 @@ const StyledDiv = styled.div`
   width: 100vw;
   overflow-x: hidden;
   overflow-y: hidden;
-  
 
   & .work-area {
-    
     background-color: #e6e6e6;
     width: 100vw;
     height: calc(100vh);
@@ -37,7 +38,6 @@ const StyledDiv = styled.div`
     overflow-y: hidden;
     padding: 0;
     margin: 0;
-    
 
     display: flex;
     flex-direction: row;
