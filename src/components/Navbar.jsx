@@ -3,28 +3,35 @@ import FormButton from "./FormButton";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../contexts/authContext";
 import { ModalContext } from "../contexts/modalContext";
+import { LaneContext } from "../contexts/laneContext";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-const NavLoggedIn = (props) => (
-  <ul>
-    <li>
-      <Link to="/workspace">
-        <FormButton>Workspace</FormButton>
-      </Link>
-    </li>
-    <li>
-      <Link to="/lanes">
-        <FormButton>Lanes</FormButton>
-      </Link>
-    </li>
-    <li>
-      <FormButton onClick={props.handleLogout} theme="red">
-        Signout
-      </FormButton>
-    </li>
-  </ul>
-);
+
+const NavLoggedIn = (props) => {
+  
+  const { id: currentLaneId } = useContext(LaneContext).currentLane;
+
+  return (
+    <ul>
+      <li>
+        <Link to={`/workspace/no-engram`}>
+          <FormButton>Workspace</FormButton>
+        </Link>
+      </li>
+      <li>
+        <Link to="/lanes">
+          <FormButton>Lanes</FormButton>
+        </Link>
+      </li>
+      <li>
+        <FormButton onClick={props.handleLogout} theme="red">
+          Signout
+        </FormButton>
+      </li>
+    </ul>
+  );
+};
 const NavLoggedOut = (props) => (
   <ul>
     <li>

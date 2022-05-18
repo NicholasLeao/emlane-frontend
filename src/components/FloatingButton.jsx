@@ -1,6 +1,7 @@
 import { filterProps } from "framer-motion";
 import styled from "styled-components";
 import { motion } from "framer-motion";
+
 function FloatingButton(props) {
   return (
     <StyledContainer
@@ -18,7 +19,7 @@ function FloatingButton(props) {
         borderRadius: "4px",
       }}
     >
-      <button>
+      <button onClick={props.onClickHandler}>
         <img src={props.img} alt="Hello" />
       </button>
     </StyledContainer>

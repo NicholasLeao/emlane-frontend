@@ -2,8 +2,11 @@ import styled from "styled-components";
 import Instance from "./Instance";
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 function Instances(props) {
+  const { id: currentEngramId } = useParams();
+
   //  Instance fetch =========================================================
   const [instanceArray, setInstanceArray] = useState([]);
 
@@ -22,12 +25,12 @@ function Instances(props) {
 
   useEffect(() => {
     fetchInstances();
-  }, [fetchInstances]);
+  }, [fetchInstances, props.updateToken]);
 
   //  JSX ===================================================================
   return (
     <StyledDiv>
-      {instanceArray.map((el) => (
+      {currentEngramId !== "no-engram" && instanceArray.map((el) => (
         <Instance instanceEl={el} key={`${Math.random()}`} />
       ))}
     </StyledDiv>
@@ -45,10 +48,10 @@ const StyledDiv = styled.div`
   box-sizing: border-box;
   overflow-y: scroll;
   overflow-x: hidden;
-  padding-top: 40px;
   display: flex;
   flex-direction: column;
   gap: 15px;
+  padding: 40px 15px 15px 15px;
 
   &::-webkit-scrollbar {
     display: none;

@@ -35,7 +35,7 @@ function Login() {
       formSubmitState
     );
 
-    console.log("📰", response);
+    // console.log("📰", response);
     if (response.status === 201) {
       //  Handle response
       response.data.token && console.log("🏪", response.data.token);

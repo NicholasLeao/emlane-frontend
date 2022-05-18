@@ -3,18 +3,21 @@ import Canvas from "../../components/Canvas";
 import Sidebar from "../../components/Sidebar";
 import FloatingMenu from "./FloatingMenu";
 import Instances from "./Instances";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 function Workspace() {
   const { id } = useParams();
-  console.log("🍌", id);
+  const [updateToken, forceUpdateFn] = useState(false);
+  const forceUpdate = () => forceUpdateFn((s) => !s);
+  //  JSX =================================================================
   return (
     <StyledDiv>
       <div className="work-area">
         <Sidebar />
         <Canvas>
-          <FloatingMenu />
-          <Instances engramId={id} />
+          <FloatingMenu forceUpdate={forceUpdate} />
+          <Instances updateToken={updateToken} engramId={id} />
         </Canvas>
       </div>
     </StyledDiv>

@@ -1,9 +1,13 @@
 import styled from "styled-components";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useContext } from "react";
 import axios from "axios";
 import SidebarNode from "../pages/workspace/SidebarNode";
 import { motion } from "framer-motion";
+import { LaneContext } from "../contexts/laneContext";
+
 function Sidebar() {
+  const [_, forceUpdate] = useState(false);
+
   //  Fetch lane array ====================================================
   const [laneArray, setLaneArray] = useState([]);
   const fetchLaneHandler = useCallback(async () => {
@@ -11,12 +15,41 @@ function Sidebar() {
       `http://127.0.0.1:8000/lanes/children/6285067d0edff6f1dec94047`
     );
     setLaneArray(response.data.children);
-    console.log("🌑", response.data);
+    // console.log("🌑", response.data);
   }, []);
 
   useEffect(() => {
     fetchLaneHandler();
   }, [fetchLaneHandler]);
+
+  // Add new engram =======================================================
+
+  //  Define current lane
+  const { currentLane, setCurrentLane } = useContext(LaneContext);
+
+  // Add engram function
+  const handleAddEngram = useCallback(async () => {
+    if (!currentLane.id) return;
+    // console.log("🐶", currentLane)
+    try {
+      console.log("hey")
+      // Create engram
+      const response = await axios.post("http://127.0.0.1:8000/engrams", {
+        title: "",
+        owner: currentLane.id,
+      });
+      if (!response.status === 201) throw response;
+      // Add engram to lane
+      await axios.post(
+        `http://127.0.0.1:8000/lanes/children/${currentLane.id}`,
+        { children: response.data.data.engram.id }
+      );
+      //
+      fetchLaneHandler();
+    } catch (err) {
+      console.log("❤️‍🔥", err);
+    }
+  }, [currentLane.id, fetchLaneHandler]);
 
   // JSX ==================================================================
   return (
@@ -24,8 +57,21 @@ function Sidebar() {
       <nav className="lane-nav">
         <ul>
           {laneArray.map((el, idx) => (
-            <SidebarNode engramEl={el} idx={idx} key={`li_${Math.random()}`}></SidebarNode>
+            <SidebarNode
+              engramEl={el}
+              idx={idx}
+              key={`li_${Math.random()}`}
+            ></SidebarNode>
           ))}
+          <motion.button
+            initial={{ scale: 0.9 }}
+            whileHover={{ scale: 1.3 }}
+            whileTap={{ scale: 0.8 }}
+            className="add-instance"
+            onClick={handleAddEngram}
+          >
+            <p>+</p>
+          </motion.button>
         </ul>
       </nav>
     </StyledNav>
@@ -51,6 +97,21 @@ const StyledNav = styled.nav`
   padding: 0 10px;
   z-index: 2;
   padding-top: 60px;
+
+  & .add-instance {
+    margin-top: 15px;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    font-size: 30px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   & .side-menu {
     width: 5px;

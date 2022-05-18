@@ -5,20 +5,22 @@ import { Link } from "react-router-dom";
 function SidebarNode(props) {
   return (
     <Link to={`/workspace/${props.engramEl.id}`}>
-      <StyledBtn
-        as={motion.div}
-        initial={{ scale: 0.9 }}
-        whileHover={{ scale: 1 }}
-        whileTap={{
-          scale: 0.8,
-          rotate: -180,
-          borderRadius: "100%",
-          // borderColor: "#E9766F",
-          // color: "#E9766F",
-        }}
-      >
-        <p className="number">{props.idx}</p>
-      </StyledBtn>
+      <li>
+        <StyledBtn
+          as={motion.div}
+          initial={{ scale: 0.9 }}
+          whileHover={{ scale: 1 }}
+          whileTap={{
+            scale: 0.8,
+            rotate: -180,
+            borderRadius: "100%",
+            // borderColor: "#E9766F",
+            // color: "#E9766F",
+          }}
+        >
+          <p className="number">{props.idx}</p>
+        </StyledBtn>
+      </li>
     </Link>
   );
 }
