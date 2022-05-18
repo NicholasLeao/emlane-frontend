@@ -7,7 +7,7 @@ import Home from "./pages/home/Home";
 import AuthRoute from "./components/AuthRoute";
 import { ModalContext } from "./contexts/modalContext";
 import { useContext } from "react";
-
+//
 // import LaneScreen from "./pages/lanes/LaneScreen";
 
 function App() {
