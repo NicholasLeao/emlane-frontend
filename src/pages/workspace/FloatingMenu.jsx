@@ -17,6 +17,10 @@ function FloatingMenu() {
       <FloatingButton img={imgText} />
       <FloatingButton img={imgPicture} />
       <FloatingButton img={imgHead} />
+      <FloatingButton img={imgClose} />
+      <FloatingButton img={imgLock} />
+      <FloatingButton img={imgLock2} />
+      <FloatingButton img={imgTrash} />
     </StyledContainer>
   );
 }
@@ -31,13 +35,12 @@ const StyledContainer = styled.div`
   gap: 13px;
   padding: 8px 0;
 
-  border: 4px solid black;
+  /* border: 4px solid black; */
   background-color: rgba(0, 0, 0, 0);
   box-sizing: border-box;
   position: absolute;
   top: 80px;
   left: 40px;
   width: 60px;
-  height: 250px;
   z-index: 4;
 `;

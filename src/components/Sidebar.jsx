@@ -13,7 +13,7 @@ function Sidebar() {
   }, []);
 
   useEffect(() => {
-    fetchLaneHandler();
+    // fetchLaneHandler();
   }, [fetchLaneHandler]);
 
   // JSX ==================================================================

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Canvas from "../../components/Canvas";
 import Sidebar from "../../components/Sidebar";
 import FloatingMenu from "./FloatingMenu";
+import Instances from "./Instances";
 
 function Workspace() {
   return (
@@ -9,7 +10,8 @@ function Workspace() {
       <div className="work-area">
         <Sidebar />
         <Canvas>
-          <FloatingMenu/>
+          <FloatingMenu />
+          <Instances />
         </Canvas>
       </div>
     </StyledDiv>
@@ -23,8 +25,10 @@ const StyledDiv = styled.div`
   width: 100vw;
   overflow-x: hidden;
   overflow-y: hidden;
+  
 
   & .work-area {
+    
     background-color: #e6e6e6;
     width: 100vw;
     height: calc(100vh);
@@ -33,6 +37,7 @@ const StyledDiv = styled.div`
     overflow-y: hidden;
     padding: 0;
     margin: 0;
+    
 
     display: flex;
     flex-direction: row;
