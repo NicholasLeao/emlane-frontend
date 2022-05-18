@@ -4,7 +4,7 @@ function CanvasPattern() {
   return (
     <StyledDiv>
       <svg
-        style={{ backgroundColor: "#e6e6e6" }}
+        style={{ backgroundColor: "rgba(0,0,0,0)" }}
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
@@ -33,7 +33,10 @@ export default CanvasPattern;
 const StyledDiv = styled.div`
   & svg {
     position: absolute;
-    height: 100%;
-    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    height: 100vh;
+    width: 100vw;
   }
 `;

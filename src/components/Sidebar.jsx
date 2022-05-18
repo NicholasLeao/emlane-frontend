@@ -26,7 +26,7 @@ function Sidebar() {
       <nav className="lane-nav">
         <ul>
           {laneState.map((el, idx) => (
-            <li></li>
+            <li key={`li_${Math.random()}`}></li>
           ))}
         </ul>
       </nav>
@@ -51,6 +51,7 @@ const StyledNav = styled.nav`
   background-color: white;
   border: 4px solid black;
   padding: 0 10px;
+  z-index: 2;
 
   & .side-menu {
     width: 5px;
@@ -71,7 +72,7 @@ const StyledNav = styled.nav`
       margin: 25px 0 0 0;
 
       background-color: #8f6fe9;
-      border: 2px solid #000000;
+      border: 2px solid black;
 
       box-sizing: border-box;
 

@@ -5,7 +5,7 @@ function Canvas(props) {
   return (
     <StyledDiv>
       {props.children}
-      {/* <CanvasPattern /> */}
+      <CanvasPattern />
     </StyledDiv>
   );
 }
