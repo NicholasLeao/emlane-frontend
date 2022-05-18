@@ -1,13 +1,16 @@
 import styled from "styled-components";
 import Canvas from "../../components/Canvas";
 import Sidebar from "../../components/Sidebar";
+import FloatingMenu from "./FloatingMenu";
 
 function Workspace() {
   return (
     <StyledDiv>
       <div className="work-area">
         <Sidebar />
-        <Canvas></Canvas>
+        <Canvas>
+          <FloatingMenu/>
+        </Canvas>
       </div>
     </StyledDiv>
   );

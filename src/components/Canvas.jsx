@@ -15,7 +15,8 @@ export default Canvas;
 const StyledDiv = styled.div`
   background-color: #e6e6e6;
   width: 100%;
-  height: auto;
+  height: 100%;
+  position: relative;
   box-sizing: border-box;
   overflow: hidden;
 

@@ -3,10 +3,6 @@ import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 function Sidebar() {
-  //  Animation toggle state ==============================================
-  const [isToggled, setIsToggled] = useState(false);
-  const toggleHandler = () => setIsToggled((s) => !s);
-
   //  Fetch lane array ====================================================
   const [laneState, setLaneState] = useState([]);
   const fetchLaneHandler = useCallback(async () => {
