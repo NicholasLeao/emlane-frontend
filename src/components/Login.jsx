@@ -6,7 +6,7 @@ import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 function Login() {
-  const navigate  = useNavigate();
+  const navigate = useNavigate();
   //  Form change handler =================================================
   const [formState, setFormState] = useState({
     email: "",
@@ -36,14 +36,15 @@ function Login() {
       "http://127.0.0.1:8000/users/login",
       formSubmitState
     );
-
-    if (response.status === 201) {
+    if (response.status === 200) {
       // HANDLE TOKEN
-      response.data.token && console.log(response.data.token);
+      response.data.token && console.log("🏪", response.data.token);
+      response.data.data.user && console.log("🙃", response.data.data.user);
+
       // NAVIGATE
-      navigate ("/hey");
+      navigate("/");
     }
-  }, [formSubmitState, navigate ]);
+  }, [formSubmitState, navigate]);
 
   useEffect(() => {
     postSubmitState();

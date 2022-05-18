@@ -33,9 +33,11 @@ function Login() {
 
     if (response.status === 200) {
       // HANDLE TOKEN
-      response.data.token && console.log(response.data.token);
+      response.data.token && console.log("🏪", response.data.token);
+      response.data.data.user && console.log("🙃", response.data.data.user);
+
       // NAVIGATE
-      navigate("/hey");
+      navigate("/");
     }
   }, [formSubmitState, navigate]);
 
