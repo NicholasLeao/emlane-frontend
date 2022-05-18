@@ -7,16 +7,18 @@ import { LaneContext } from "../contexts/laneContext";
 
 function Sidebar() {
   const [_, forceUpdate] = useState(false);
+  //  Define current lane
+  const { currentLane, setCurrentLane } = useContext(LaneContext);
 
   //  Fetch lane array ====================================================
   const [laneArray, setLaneArray] = useState([]);
   const fetchLaneHandler = useCallback(async () => {
     const response = await axios.get(
-      `http://127.0.0.1:8000/lanes/children/6285067d0edff6f1dec94047`
+      `http://127.0.0.1:8000/lanes/children/${currentLane.id}`
     );
     setLaneArray(response.data.children);
     // console.log("🌑", response.data);
-  }, []);
+  }, [currentLane.id]);
 
   useEffect(() => {
     fetchLaneHandler();
@@ -24,15 +26,12 @@ function Sidebar() {
 
   // Add new engram =======================================================
 
-  //  Define current lane
-  const { currentLane, setCurrentLane } = useContext(LaneContext);
-
   // Add engram function
   const handleAddEngram = useCallback(async () => {
     if (!currentLane.id) return;
     // console.log("🐶", currentLane)
     try {
-      console.log("hey")
+      console.log("hey");
       // Create engram
       const response = await axios.post("http://127.0.0.1:8000/engrams", {
         title: "",
