@@ -10,8 +10,10 @@ function AuthContextComponent(props) {
     const parsedStoredUser = JSON.parse(storedUser || '""');
 
     if (parsedStoredUser.token) {
+      console.log("isAuth")
       setLoggedInUser(parsedStoredUser);
     } else {
+      console.log("isNotAuth")
       setLoggedInUser(null);
     }
   }, []);

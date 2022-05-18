@@ -5,6 +5,10 @@ import { motion } from "framer-motion";
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/authContext";
+import { ModalContext } from "../contexts/modalContext";
+import { useContext } from "react";
+import Backdrop from "./Backdrop";
 function Login() {
   const navigate = useNavigate();
   //  Form change handler =================================================
@@ -24,6 +28,8 @@ function Login() {
 
   //  Form submit handler =================================================
   const [formSubmitState, setFormSubmitState] = useState({});
+  const { setLoggedInUser } = useContext(AuthContext);
+  const { modalHandler } = useContext(ModalContext);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -32,67 +38,73 @@ function Login() {
 
   const postSubmitState = useCallback(async () => {
     if (!formSubmitState.email) return;
+
     const response = await axios.post(
       "http://127.0.0.1:8000/users/login",
       formSubmitState
     );
-    if (response.status === 200) {
-      // HANDLE TOKEN
-      response.data.token && console.log("🏪", response.data.token);
-      response.data.data.user && console.log("🙃", response.data.data.user);
 
-      // NAVIGATE
+    if (response.status === 200) {
+      //  Handle response
+      response.data.status = undefined;
+      setLoggedInUser({ ...response.data.user });
+      localStorage.setItem("emlane-user", JSON.stringify(response.data));
+      //  Handle UI
+      modalHandler("none");
       navigate("/");
     }
-  }, [formSubmitState, navigate]);
+  }, [formSubmitState, navigate, setLoggedInUser, modalHandler]);
 
   useEffect(() => {
     postSubmitState();
   }, [formSubmitState, postSubmitState]);
   //  JSX =================================================================
   return (
-    <form>
-      <StyledDiv
-        as={motion.div}
-        initial={{
-          borderRadius: "12px",
-          boxShadow: "3px 5px 0px 1px #000000",
-        }}
-        whileHover={{
-          boxShadow: "8px 7px 0px 1px #000000",
-          borderRadius: "12px",
-          transition: { duration: 0.5 },
-        }}
-      >
-        <div className="login-modal">
-          <FormInput
-            nameProperty="email"
-            valueName="Email"
-            placeholder="evangelion1978@uol.com.br"
-            inputType="text"
-            changeHandler={changeHandler}
-            valueState={formState.email}
-          />
+    <>
+      <form>
+        <StyledDiv
+          as={motion.div}
+          initial={{
+            borderRadius: "12px",
+            boxShadow: "3px 5px 0px 1px #000000",
+          }}
+          whileHover={{
+            boxShadow: "8px 7px 0px 1px #000000",
+            borderRadius: "12px",
+            transition: { duration: 0.5 },
+          }}
+        >
+          <div className="login-modal">
+            <FormInput
+              nameProperty="email"
+              valueName="Email"
+              placeholder="evangelion1978@uol.com.br"
+              inputType="text"
+              changeHandler={changeHandler}
+              valueState={formState.email}
+            />
 
-          <FormInput
-            nameProperty="password"
-            valueName="Password"
-            placeholder=""
-            inputType="password"
-            changeHandler={changeHandler}
-            valueState={formState.password}
-          />
+            <FormInput
+              nameProperty="password"
+              valueName="Password"
+              placeholder=""
+              inputType="password"
+              changeHandler={changeHandler}
+              valueState={formState.password}
+            />
 
-          <FormButton
-            onClick={submitHandler}
-            nameProperty="confirm"
-            coloured={true}
-          >
-            Confirm
-          </FormButton>
-        </div>
-      </StyledDiv>
-    </form>
+            <FormButton
+              onClick={submitHandler}
+              nameProperty="confirm"
+              coloured={true}
+            >
+              Confirm
+            </FormButton>
+          </div>
+        </StyledDiv>
+      </form>
+      <Backdrop />
+    </>
   );
 }
 
@@ -102,6 +114,7 @@ const StyledDiv = styled.div`
   margin: auto;
   box-sizing: border-box;
   display: flex;
+  z-index: 3;
 
   position: fixed;
   top: 50%;

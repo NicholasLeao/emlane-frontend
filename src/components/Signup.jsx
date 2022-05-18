@@ -2,10 +2,12 @@ import styled from "styled-components";
 import FormInput from "./FormInput";
 import FormButton from "./FormButton";
 import { motion } from "framer-motion";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { AuthContext } from "../contexts/authContext";
+import { ModalContext } from "../contexts/modalContext";
+import Backdrop from "./Backdrop";
 function Login() {
   const navigate = useNavigate();
   //  Form change handler =================================================
@@ -17,6 +19,8 @@ function Login() {
   });
   //  Form submit handler =================================================
   const [formSubmitState, setFormSubmitState] = useState({});
+  const { setLoggedInUser } = useContext(AuthContext);
+  const { modalHandler } = useContext(ModalContext);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -31,15 +35,20 @@ function Login() {
       formSubmitState
     );
 
-    if (response.status === 200) {
-      // HANDLE TOKEN
+    console.log("📰", response);
+    if (response.status === 201) {
+      //  Handle response
       response.data.token && console.log("🏪", response.data.token);
-      response.data.data.user && console.log("🙃", response.data.data.user);
+      response.data.user && console.log("🙃", response.data.user);
+      response.data.status = undefined;
+      setLoggedInUser({ ...response.data.user });
+      localStorage.setItem("emlane-user", JSON.stringify(response.data));
 
-      // NAVIGATE
+      //  Handle UI
+      modalHandler("none");
       navigate("/");
     }
-  }, [formSubmitState, navigate]);
+  }, [formSubmitState, navigate, modalHandler, setLoggedInUser]);
 
   useEffect(() => {
     postSubmitState();
@@ -115,6 +124,7 @@ function Login() {
           </p>
         </div>
       </StyledDiv>
+      <Backdrop/>
     </>
   );
 }
@@ -125,6 +135,7 @@ const StyledDiv = styled.div`
   margin: auto;
   box-sizing: border-box;
   display: flex;
+  z-index: 3;
 
   position: fixed;
   top: 50%;

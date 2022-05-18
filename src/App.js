@@ -1,12 +1,20 @@
 import Workspace from "./pages/workspace/Workspace";
 import Navbar from "./components/Navbar";
 import { Routes, Route } from "react-router-dom";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
 import Home from "./pages/home/Home";
 import AuthRoute from "./components/AuthRoute";
+import { ModalContext } from "./contexts/modalContext";
+import { useContext } from "react";
 
 function App() {
+  const { modalState } = useContext(ModalContext);
+
   return (
     <div className="app">
+      {modalState === "login" && <Login />}
+      {modalState === "signup" && <Signup />}
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

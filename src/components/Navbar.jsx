@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import FormButton from "./FormButton";
 import { Link } from "react-router-dom";
-import { useState, useEffect, useCallback } from "react";
-import Login from "./Login";
-import Signup from "./Signup";
+import { AuthContext } from "../contexts/authContext";
+import { ModalContext } from "../contexts/modalContext";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
-const NavLoggedIn = () => (
+const NavLoggedIn = (props) => (
   <ul>
     <li>
       <Link to="/workspace">
@@ -18,7 +19,9 @@ const NavLoggedIn = () => (
       </Link>
     </li>
     <li>
-      <FormButton theme="red">Signout</FormButton>
+      <FormButton onClick={props.handleLogout} theme="red">
+        Signout
+      </FormButton>
     </li>
   </ul>
 );
@@ -39,38 +42,29 @@ const NavLoggedOut = (props) => (
 );
 
 function Navbar() {
-  //  Logged in status ====================================================
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const toggleLogin = () => setIsLoggedIn((s) => !s);
-  //  Login modal =========================================================
-  const [loginModalOpen, setLoginModalOpen] = useState(false);
-  const toggleLoginModal = () => {
-    if (signupModalOpen) toggleSignupModal();
-    setLoginModalOpen((s) => !s);
-  };
-  //  Signup modal =========================================================
-  const [signupModalOpen, setSignupModalOpen] = useState(false);
-  const toggleSignupModal = () => {
-    if (loginModalOpen) toggleLoginModal();
-    setSignupModalOpen((s) => !s);
-  };
+  const { loggedInUser } = useContext(AuthContext);
+  const { modalHandler } = useContext(ModalContext);
+
+  const navigate = useNavigate();
+  function handleLogout() {
+    localStorage.removeItem("emlane-user");
+    navigate("/");
+  }
 
   //  JSX =================================================================
   return (
     <>
-      {loginModalOpen && <Login />}
-      {signupModalOpen && <Signup />}
       <StyledNav>
         <Link to="/">
           <h2>emlane</h2>
         </Link>
         <div className="ui-ul">
-          {isLoggedIn ? (
-            <NavLoggedIn />
+          {loggedInUser ? (
+            <NavLoggedIn handleLogout={handleLogout} />
           ) : (
             <NavLoggedOut
-              loginHandler={toggleLoginModal}
-              signupHandler={toggleSignupModal}
+              loginHandler={() => modalHandler("login")}
+              signupHandler={() => modalHandler("signup")}
             />
           )}
         </div>

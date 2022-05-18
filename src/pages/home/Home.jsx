@@ -1,8 +1,12 @@
 import styled from "styled-components";
 import FormButton from "../../components/FormButton";
-import { useState, useEffect, useCallback } from "react";
+import { AuthContext } from "../../contexts/authContext";
+import { ModalContext } from "../../contexts/modalContext";
+import { useContext } from "react";
 
 function Home() {
+  const { loggedInUser } = useContext(AuthContext);
+  const { modalHandler } = useContext(ModalContext);
 
   return (
     <StyledDiv>
@@ -15,9 +19,15 @@ function Home() {
             <br /> Engage with your notes in less stressful way.
           </p>
         </div>
-        <FormButton theme="purple-outline" nameProperty="signup">
-          Create a free account!
-        </FormButton>
+        {!loggedInUser && (
+          <FormButton
+            onClick={() => modalHandler("signup")}
+            theme="purple-outline"
+            nameProperty="signup"
+          >
+            Create a free account!
+          </FormButton>
+        )}
       </section>
     </StyledDiv>
   );
