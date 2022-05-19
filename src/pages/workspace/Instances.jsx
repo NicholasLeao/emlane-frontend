@@ -3,8 +3,10 @@ import Instance from "./Instance";
 import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { api } from "../../api/api";
+import MermaidInstance from "./MermaidInstance";
 function Instances(props) {
   const { id: currentEngramId } = useParams();
+  
 
   //  Instance fetch =========================================================
   const [instanceArray, setInstanceArray] = useState([]);
@@ -29,9 +31,12 @@ function Instances(props) {
   return (
     <StyledDiv>
       {currentEngramId !== "no-engram" &&
-        instanceArray.map((el) => (
-          <Instance instanceEl={el} key={`${Math.random()}`} />
-        ))}
+        instanceArray.map((el) => {
+          if (el.type === "text")
+            return <Instance instanceEl={el} key={`${Math.random()}`} />;
+          if (el.type === "mermaid")
+            return <MermaidInstance instanceEl={el} key={`${Math.random()}`} />;
+        })}
     </StyledDiv>
   );
 }

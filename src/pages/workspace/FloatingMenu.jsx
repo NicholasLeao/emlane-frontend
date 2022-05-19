@@ -42,6 +42,27 @@ function FloatingMenu(props) {
     } catch (err) {}
   }, [currentLaneId, currentEngramId, props]);
 
+  // Add new mermaid instance handler =====================================
+  const addNewMermaidInstanceHandler = useCallback(async () => {
+    try {
+      // Create new instance
+      const response = await api.post("/instances", {
+        type: "mermaid",
+        owner: currentLaneId,
+      });
+      // Check for response status
+      if (!response.status === 201) {
+        throw new Error("Error creating instance!");
+      }
+      // Add new children to engram
+      await api.post(`/engrams/children/${currentEngramId}`, {
+        children: response.data.data.instance._id,
+      });
+      // Update
+      props.forceUpdate();
+    } catch (err) {}
+  }, [currentLaneId, currentEngramId, props]);
+
   // JSX ==================================================================
   return (
     <StyledContainer>
@@ -49,7 +70,10 @@ function FloatingMenu(props) {
         onClickHandler={addNewTextInstanceHandler}
         img={imgText}
       />
-      <FloatingButton img={imgMenu} />
+      <FloatingButton
+        onClickHandler={addNewMermaidInstanceHandler}
+        img={imgMenu}
+      />
       <FloatingButton img={imgPicture} />
       <FloatingButton img={imgHead} />
       <FloatingButton img={imgClose} />
