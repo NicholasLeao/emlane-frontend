@@ -3,7 +3,7 @@ import Lane from "./Lane";
 import { useState, useEffect, useCallback, useContext } from "react";
 import { AuthContext } from "../../contexts/authContext";
 import axios from "axios";
-
+import { api } from "../../api/api";
 function Lanes(props) {
   const { _id: currentUserId } = useContext(AuthContext).loggedInUser.user;
 
@@ -12,9 +12,7 @@ function Lanes(props) {
 
   const fetchLanes = useCallback(async () => {
     try {
-      const response = await axios.get(
-        `http://127.0.0.1:8000/users/children/${currentUserId}`
-      );
+      const response = await api.get(`/users/children/${currentUserId}`);
       if (response) {
         setLaneArray(response.data.children);
         console.log("🐕", response);

@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { LaneContext } from "../../contexts/laneContext";
 import { AuthContext } from "../../contexts/authContext";
+import { api } from "../../api/api";
 
 // Images
 import imgClose from "../../assets/images/icon_close.svg";
@@ -26,7 +27,7 @@ function FloatingMenuNav(props) {
   //   const addNewTextInstanceHandler = useCallback(async () => {
   //     try {
   //       // Create new instance
-  //       const response = await axios.post("http://127.0.0.1:8000/instances", {
+  //       const response = await api.post("/instances", {
   //         type: "text",
   //         owner: currentLaneId,
   //       });
@@ -35,8 +36,8 @@ function FloatingMenuNav(props) {
   //         throw new Error("Error creating instance!");
   //       }
   //       // Add new children to engram
-  //       await axios.post(
-  //         `http://127.0.0.1:8000/engrams/children/${currentEngramId}`,
+  //       await api.post(
+  //         `/engrams/children/${currentEngramId}`,
   //         { children: response.data.data.instance._id }
   //       );
   //       // Update

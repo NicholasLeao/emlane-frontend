@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import Instance from "./Instance";
 import { useState, useEffect, useCallback } from "react";
-import axios from "axios";
 import { useParams } from "react-router-dom";
-
+import { api } from "../../api/api";
 function Instances(props) {
   const { id: currentEngramId } = useParams();
 
@@ -13,9 +12,7 @@ function Instances(props) {
   const fetchInstances = useCallback(async () => {
     if (currentEngramId === "no-engram") return;
     try {
-      const response = await axios.get(
-        `http://127.0.0.1:8000/engrams/children/${props.engramId}`
-      );
+      const response = await api.get(`/engrams/children/${props.engramId}`);
       if (response) {
         setInstanceArray(response.data.children);
       }

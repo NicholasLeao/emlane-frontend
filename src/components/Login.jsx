@@ -44,8 +44,8 @@ function Login() {
     try {
       if (!formSubmitState.email) return;
 
-      const response = await axios.post(
-        "http://127.0.0.1:8000/users/login",
+      const response = await api.post(
+        "/users/login",
         formSubmitState
       );
 
