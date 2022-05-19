@@ -19,36 +19,37 @@ import imgTrash from "../../assets/images/icon_trash.svg";
 
 function FloatingMenuNav(props) {
   //  User Ids ============================================================
-  //   const { id: currentEngramId } = useParams();
-  //   const { id: currentLaneId } = useContext(LaneContext).currentLane;
-  //   const { _id: currentUserId } = useContext(AuthContext).loggedInUser.user;
+  const { id: currentEngramId } = useParams();
+  const { id: currentLaneId } = useContext(LaneContext).currentLane;
+  const { _id: currentUserId } = useContext(AuthContext).loggedInUser.user;
 
   //  Add new text instance ===============================================
-  //   const addNewTextInstanceHandler = useCallback(async () => {
-  //     try {
-  //       // Create new instance
-  //       const response = await api.post("/instances", {
-  //         type: "text",
-  //         owner: currentLaneId,
-  //       });
-  //       // Check for response status
-  //       if (!response.status === 201) {
-  //         throw new Error("Error creating instance!");
-  //       }
-  //       // Add new children to engram
-  //       await api.post(
-  //         `/engrams/children/${currentEngramId}`,
-  //         { children: response.data.data.instance._id }
-  //       );
-  //       // Update
-  //       props.forceUpdate();
-  //     } catch (err) {}
-  //   }, [currentLaneId, currentEngramId, props]);
+  const addNewLaneHandler = useCallback(async () => {
+    try {
+      // Create new lane
+      const response = await api.post("/lanes", {
+        title: "New Lane",
+        owner: currentUserId,
+      });
+      console.log("🚒", response);
+      // Check for response status
+      if (!response.status === 201) {
+        throw new Error("Error creating lane!");
+      }
+      // Add new children to user
+      const response2 = await api.post(`/users/children/${currentUserId}`, {
+        children: response.data.data.lane._id,
+      });
+      console.log("🧑‍🏫", response2);
+      // Update
+      props.forceUpdate();
+    } catch (err) {}
+  }, [currentUserId, props]);
 
   // JSX ==================================================================
   return (
     <StyledContainer>
-      <FloatingButton img={imgText} />
+      <FloatingButton onClickHandler={addNewLaneHandler} img={imgText} />
       <FloatingButton img={imgMenu} />
       <FloatingButton img={imgPicture} />
       <FloatingButton img={imgHead} />

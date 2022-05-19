@@ -13,7 +13,7 @@ function LaneScreen() {
     <StyledDiv>
       <div className="work-area">
         <Canvas>
-          <Lanes />
+          <Lanes updateToken={updateToken}/>
           <FloatingMenuNav forceUpdate={forceUpdate} />
         </Canvas>
       </div>

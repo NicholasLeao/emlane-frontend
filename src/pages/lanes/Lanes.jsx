@@ -24,7 +24,7 @@ function Lanes(props) {
 
   useEffect(() => {
     fetchLanes();
-  }, [fetchLanes]);
+  }, [fetchLanes, props.updateToken]);
   // JSX ==================================================================
   return (
     <StyledContainer>
