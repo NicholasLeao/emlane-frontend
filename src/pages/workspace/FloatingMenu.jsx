@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { LaneContext } from "../../contexts/laneContext";
 import { AuthContext } from "../../contexts/authContext";
 import { api } from "../../api/api";
+import FloatingButtonUpload from "./FloatingButtonUpload";
 
 import imgClose from "../../assets/images/icon_close.svg";
 import imgHead from "../../assets/images/icon_head.svg";
@@ -63,6 +64,8 @@ function FloatingMenu(props) {
     } catch (err) {}
   }, [currentLaneId, currentEngramId, props]);
 
+  // Add new photo instance handler =======================================
+
   // JSX ==================================================================
   return (
     <StyledContainer>
@@ -74,7 +77,12 @@ function FloatingMenu(props) {
         onClickHandler={addNewMermaidInstanceHandler}
         img={imgMenu}
       />
-      <FloatingButton img={imgPicture} />
+      <FloatingButtonUpload
+        currentEngramId={currentEngramId}
+        currentLaneId={currentLaneId}
+        img={imgPicture}
+      />
+
       <FloatingButton img={imgHead} />
       <FloatingButton img={imgClose} />
       <FloatingButton img={imgLock} />

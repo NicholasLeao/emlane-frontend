@@ -4,9 +4,10 @@ import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { api } from "../../api/api";
 import MermaidInstance from "./MermaidInstance";
+import PhotoInstance from "./PhotoInstance";
+
 function Instances(props) {
   const { id: currentEngramId } = useParams();
-  
 
   //  Instance fetch =========================================================
   const [instanceArray, setInstanceArray] = useState([]);
@@ -36,6 +37,9 @@ function Instances(props) {
             return <Instance instanceEl={el} key={`${Math.random()}`} />;
           if (el.type === "mermaid")
             return <MermaidInstance instanceEl={el} key={`${Math.random()}`} />;
+          if (el.type === "picture")
+            return <PhotoInstance instanceEl={el} key={`${Math.random()}`} />;
+          else return "";
         })}
     </StyledDiv>
   );

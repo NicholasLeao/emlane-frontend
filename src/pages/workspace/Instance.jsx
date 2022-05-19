@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { api } from "../../api/api";
 
 function Instance(props) {
+  
   // lifted state from TextBox ============================================
   const [instanceText, setInstanceText] = useState("");
 
