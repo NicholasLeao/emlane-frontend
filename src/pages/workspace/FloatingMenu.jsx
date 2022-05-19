@@ -2,11 +2,10 @@ import styled from "styled-components";
 import FloatingButton from "../../components/FloatingButton";
 import { useCallback, useContext } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import { LaneContext } from "../../contexts/laneContext";
 import { AuthContext } from "../../contexts/authContext";
 import { api } from "../../api/api";
-// Images
+
 import imgClose from "../../assets/images/icon_close.svg";
 import imgHead from "../../assets/images/icon_head.svg";
 import imgLock from "../../assets/images/icon_lock.svg";
@@ -71,7 +70,6 @@ const StyledContainer = styled.div`
   gap: 13px;
   padding: 8px 0;
 
-  /* border: 4px solid black; */
   background-color: rgba(0, 0, 0, 0);
   box-sizing: border-box;
   position: absolute;

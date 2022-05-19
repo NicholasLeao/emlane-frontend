@@ -71,7 +71,6 @@ const StyledContainer = styled.div`
   gap: 13px;
   padding: 8px 0;
 
-  /* border: 4px solid black; */
   background-color: rgba(0, 0, 0, 0);
   box-sizing: border-box;
   position: absolute;

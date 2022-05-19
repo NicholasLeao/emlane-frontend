@@ -2,7 +2,6 @@ import styled from "styled-components";
 import TextBox from "./TextBox";
 import { useState, useEffect, useCallback } from "react";
 import { api } from "../../api/api";
-import axios from "axios";
 
 function Instance(props) {
   // lifted state from TextBox ============================================

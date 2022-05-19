@@ -1,15 +1,13 @@
 import styled from "styled-components";
 import FormButton from "./FormButton";
-import { Link } from "react-router-dom";
+
 import { AuthContext } from "../contexts/authContext";
 import { ModalContext } from "../contexts/modalContext";
-import { LaneContext } from "../contexts/laneContext";
+
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const NavLoggedIn = (props) => {
-  const { id: currentLaneId } = useContext(LaneContext).currentLane;
-
   return (
     <ul>
       <li>
@@ -47,22 +45,26 @@ const NavLoggedOut = (props) => (
 );
 
 function Navbar() {
-  const { loggedInUser } = useContext(AuthContext);
+  const { loggedInUser, setLoggedInUser } = useContext(AuthContext);
   const { modalHandler } = useContext(ModalContext);
 
+  // Logout ===============================================================
   const navigate = useNavigate();
   function handleLogout() {
     localStorage.removeItem("emlane-user");
+    setLoggedInUser({
+      token: "",
+      user: {},
+    });
     navigate("/");
   }
 
   // Track if user is logged in ===========================================
   const [loggedInUserBool, setLoggedInUserBool] = useState(false);
-  useEffect(() => {
-    setLoggedInUserBool(
-      loggedInUser.token !== undefined && loggedInUser.token !== ""
-    );
-  }, [loggedInUser]);
+  useEffect(
+    () => setLoggedInUserBool(loggedInUser.token !== ""),
+    [loggedInUser]
+  );
 
   //  JSX =================================================================
   return (

@@ -1,4 +1,3 @@
-import { filterProps } from "framer-motion";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
@@ -38,7 +37,6 @@ const StyledContainer = styled.div`
     border: 3px solid black;
     border-radius: 4px;
     box-sizing: border-box;
-    /* overflow: hidden; */
     padding: 5px;
 
     cursor: pointer;

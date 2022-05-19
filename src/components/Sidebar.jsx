@@ -26,7 +26,6 @@ function Sidebar() {
   // Add engram function
   const handleAddEngram = useCallback(async () => {
     if (!currentLane.id) return;
-    // console.log("🐶", currentLane)
     try {
       console.log("hey");
       // Create engram
@@ -41,9 +40,7 @@ function Sidebar() {
       });
       //
       fetchLaneHandler();
-    } catch (err) {
-      console.log("❤️‍🔥", err);
-    }
+    } catch (err) {}
   }, [currentLane.id, fetchLaneHandler]);
 
   // JSX ==================================================================
@@ -118,30 +115,13 @@ const StyledNav = styled.nav`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
-    /* & li {
-      width: 28px;
-      height: 28px;
-      border-radius: 20%;
-      transform: rotate(45deg);
-      margin: 25px 0 0 0;
-
-      background-color: #8f6fe9;
-      border: 2px solid black;
-
-      box-sizing: border-box;
-
-      list-style: none;
-      cursor: pointer;
-    } */
   }
 
-  /* Hide scrollbar for Chrome, Safari and Opera */
   &::-webkit-scrollbar {
     display: none;
   }
   & {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 `;
