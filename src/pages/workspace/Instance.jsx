@@ -6,8 +6,6 @@ import { api } from "../../api/api";
 function Instance(props) {
   // lifted state from TextBox ============================================
   const [instanceText, setInstanceText] = useState("");
-  useEffect(() => console.log("😺", instanceText), [instanceText]);
-  console.log(props.instanceEl);
 
   // Save to server =======================================================
   const saveToServer = useCallback(async () => {
@@ -21,9 +19,21 @@ function Instance(props) {
   }, [instanceText, props.instanceEl.content, props.instanceEl._id]);
 
   const clickHandler = () => {
-    console.log("CLEEK");
     saveToServer();
   };
+
+  useEffect(() => {
+    const timerID = setTimeout(() => {
+      if (props.instanceEl.content === instanceText) return;
+      if (instanceText === "") return;
+      // console.log("❤️‍🔥 SAVE");
+      saveToServer();
+    }, 1000);
+
+    return () => {
+      clearTimeout(timerID);
+    };
+  }, [instanceText]);
 
   // JSX ==================================================================
   return (
@@ -33,9 +43,9 @@ function Instance(props) {
           instanceContent={props.instanceEl.content}
           setHandler={setInstanceText}
         ></TextBox>
-        <button onClick={clickHandler}>
+        {/* <button onClick={clickHandler}>
           <p>SAVE</p>
-        </button>
+        </button> */}
       </div>
     </StyledDiv>
   );
