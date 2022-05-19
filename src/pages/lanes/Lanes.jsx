@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Lane from "./Lane";
 import { useState, useEffect, useCallback, useContext } from "react";
 import { AuthContext } from "../../contexts/authContext";
-import axios from "axios";
+import { api } from "../../api/api";
 
 function Lanes(props) {
   const { _id: currentUserId } = useContext(AuthContext).loggedInUser.user;
@@ -12,9 +12,7 @@ function Lanes(props) {
 
   const fetchLanes = useCallback(async () => {
     try {
-      const response = await axios.get(
-        `http://127.0.0.1:8000/users/children/${currentUserId}`
-      );
+      const response = await api.get(`/users/children/${currentUserId}`);
       if (response) {
         setLaneArray(response.data.children);
         console.log("🐕", response);
@@ -26,7 +24,7 @@ function Lanes(props) {
 
   useEffect(() => {
     fetchLanes();
-  }, [fetchLanes]);
+  }, [fetchLanes, props.updateToken]);
   // JSX ==================================================================
   return (
     <StyledContainer>
@@ -40,18 +38,14 @@ function Lanes(props) {
 export default Lanes;
 
 const StyledContainer = styled.div`
-  /* border: 4px solid red; */
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   gap: 15px;
   height: fit-content;
   width: fit-content;
-  /* align-items: center; */
-  /* justify-content: space-between; */
   background-color: rgba(0, 0, 0, 0);
   z-index: 3;
-  /* min-width: 800px; */
   overflow-y: scroll;
   min-width: 150px;
   max-width: 75%;

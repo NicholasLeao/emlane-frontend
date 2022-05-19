@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { LaneContext } from "../../contexts/laneContext";
 import { AuthContext } from "../../contexts/authContext";
+import { api } from "../../api/api";
 
 // Images
 import imgClose from "../../assets/images/icon_close.svg";
@@ -18,36 +19,37 @@ import imgTrash from "../../assets/images/icon_trash.svg";
 
 function FloatingMenuNav(props) {
   //  User Ids ============================================================
-  //   const { id: currentEngramId } = useParams();
-  //   const { id: currentLaneId } = useContext(LaneContext).currentLane;
-  //   const { _id: currentUserId } = useContext(AuthContext).loggedInUser.user;
+  const { id: currentEngramId } = useParams();
+  const { id: currentLaneId } = useContext(LaneContext).currentLane;
+  const { _id: currentUserId } = useContext(AuthContext).loggedInUser.user;
 
   //  Add new text instance ===============================================
-  //   const addNewTextInstanceHandler = useCallback(async () => {
-  //     try {
-  //       // Create new instance
-  //       const response = await axios.post("http://127.0.0.1:8000/instances", {
-  //         type: "text",
-  //         owner: currentLaneId,
-  //       });
-  //       // Check for response status
-  //       if (!response.status === 201) {
-  //         throw new Error("Error creating instance!");
-  //       }
-  //       // Add new children to engram
-  //       await axios.post(
-  //         `http://127.0.0.1:8000/engrams/children/${currentEngramId}`,
-  //         { children: response.data.data.instance._id }
-  //       );
-  //       // Update
-  //       props.forceUpdate();
-  //     } catch (err) {}
-  //   }, [currentLaneId, currentEngramId, props]);
+  const addNewLaneHandler = useCallback(async () => {
+    try {
+      // Create new lane
+      const response = await api.post("/lanes", {
+        title: "New Lane",
+        owner: currentUserId,
+      });
+      console.log("🚒", response);
+      // Check for response status
+      if (!response.status === 201) {
+        throw new Error("Error creating lane!");
+      }
+      // Add new children to user
+      const response2 = await api.post(`/users/children/${currentUserId}`, {
+        children: response.data.data.lane._id,
+      });
+      console.log("🧑‍🏫", response2);
+      // Update
+      props.forceUpdate();
+    } catch (err) {}
+  }, [currentUserId, props]);
 
   // JSX ==================================================================
   return (
     <StyledContainer>
-      <FloatingButton img={imgText} />
+      <FloatingButton onClickHandler={addNewLaneHandler} img={imgText} />
       <FloatingButton img={imgMenu} />
       <FloatingButton img={imgPicture} />
       <FloatingButton img={imgHead} />
@@ -69,7 +71,6 @@ const StyledContainer = styled.div`
   gap: 13px;
   padding: 8px 0;
 
-  /* border: 4px solid black; */
   background-color: rgba(0, 0, 0, 0);
   box-sizing: border-box;
   position: absolute;

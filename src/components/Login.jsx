@@ -1,17 +1,20 @@
 import styled from "styled-components";
 import FormInput from "./FormInput";
 import FormButton from "./FormButton";
+import Backdrop from "./Backdrop";
+
 import { motion } from "framer-motion";
-import { useState, useEffect, useCallback } from "react";
-import axios from "axios";
+import { useState, useEffect, useCallback, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { AuthContext } from "../contexts/authContext";
 import { ModalContext } from "../contexts/modalContext";
-import { useContext } from "react";
 import { LaneContext } from "../contexts/laneContext";
-import Backdrop from "./Backdrop";
+import {api} from "../api/api"
+
 function Login() {
   const navigate = useNavigate();
+
   //  Form change handler =================================================
   const [formState, setFormState] = useState({
     email: "",
@@ -42,8 +45,8 @@ function Login() {
     try {
       if (!formSubmitState.email) return;
 
-      const response = await axios.post(
-        "http://127.0.0.1:8000/users/login",
+      const response = await api.post(
+        "/users/login",
         formSubmitState
       );
 
@@ -72,6 +75,7 @@ function Login() {
   useEffect(() => {
     postSubmitState();
   }, [formSubmitState, postSubmitState]);
+  
   //  JSX =================================================================
   return (
     <>

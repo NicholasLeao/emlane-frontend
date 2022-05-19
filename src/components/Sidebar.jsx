@@ -4,7 +4,7 @@ import axios from "axios";
 import SidebarNode from "../pages/workspace/SidebarNode";
 import { motion } from "framer-motion";
 import { LaneContext } from "../contexts/laneContext";
-
+import { api } from "../api/api";
 function Sidebar() {
   //  Define current lane
   const { currentLane } = useContext(LaneContext);
@@ -12,9 +12,7 @@ function Sidebar() {
   //  Fetch lane array ====================================================
   const [laneArray, setLaneArray] = useState([]);
   const fetchLaneHandler = useCallback(async () => {
-    const response = await axios.get(
-      `http://127.0.0.1:8000/lanes/children/${currentLane.id}`
-    );
+    const response = await api.get(`/lanes/children/${currentLane.id}`);
     setLaneArray(response.data.children);
     // console.log("🌑", response.data);
   }, [currentLane.id]);
@@ -28,25 +26,21 @@ function Sidebar() {
   // Add engram function
   const handleAddEngram = useCallback(async () => {
     if (!currentLane.id) return;
-    // console.log("🐶", currentLane)
     try {
       console.log("hey");
       // Create engram
-      const response = await axios.post("http://127.0.0.1:8000/engrams", {
+      const response = await api.post("/engrams", {
         title: "",
         owner: currentLane.id,
       });
       if (!response.status === 201) throw response;
       // Add engram to lane
-      await axios.post(
-        `http://127.0.0.1:8000/lanes/children/${currentLane.id}`,
-        { children: response.data.data.engram.id }
-      );
+      await api.post(`/lanes/children/${currentLane.id}`, {
+        children: response.data.data.engram.id,
+      });
       //
       fetchLaneHandler();
-    } catch (err) {
-      console.log("❤️‍🔥", err);
-    }
+    } catch (err) {}
   }, [currentLane.id, fetchLaneHandler]);
 
   // JSX ==================================================================
@@ -121,30 +115,13 @@ const StyledNav = styled.nav`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
-    /* & li {
-      width: 28px;
-      height: 28px;
-      border-radius: 20%;
-      transform: rotate(45deg);
-      margin: 25px 0 0 0;
-
-      background-color: #8f6fe9;
-      border: 2px solid black;
-
-      box-sizing: border-box;
-
-      list-style: none;
-      cursor: pointer;
-    } */
   }
 
-  /* Hide scrollbar for Chrome, Safari and Opera */
   &::-webkit-scrollbar {
     display: none;
   }
   & {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 `;

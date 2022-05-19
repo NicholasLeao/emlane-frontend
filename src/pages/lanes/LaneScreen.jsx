@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import Canvas from "../../components/Canvas";
 import FloatingMenuNav from "./FloatingMenuLanes";
-import { useParams } from "react-router-dom";
 import { useState } from "react";
 import Lanes from "./Lanes";
 
@@ -13,7 +12,7 @@ function LaneScreen() {
     <StyledDiv>
       <div className="work-area">
         <Canvas>
-          <Lanes />
+          <Lanes updateToken={updateToken}/>
           <FloatingMenuNav forceUpdate={forceUpdate} />
         </Canvas>
       </div>

@@ -2,11 +2,11 @@ import styled from "styled-components";
 import FloatingButton from "../../components/FloatingButton";
 import { useCallback, useContext } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import { LaneContext } from "../../contexts/laneContext";
 import { AuthContext } from "../../contexts/authContext";
+import { api } from "../../api/api";
+import FloatingButtonUpload from "./FloatingButtonUpload";
 
-// Images
 import imgClose from "../../assets/images/icon_close.svg";
 import imgHead from "../../assets/images/icon_head.svg";
 import imgLock from "../../assets/images/icon_lock.svg";
@@ -26,7 +26,7 @@ function FloatingMenu(props) {
   const addNewTextInstanceHandler = useCallback(async () => {
     try {
       // Create new instance
-      const response = await axios.post("http://127.0.0.1:8000/instances", {
+      const response = await api.post("/instances", {
         type: "text",
         owner: currentLaneId,
       });
@@ -35,14 +35,36 @@ function FloatingMenu(props) {
         throw new Error("Error creating instance!");
       }
       // Add new children to engram
-      await axios.post(
-        `http://127.0.0.1:8000/engrams/children/${currentEngramId}`,
-        { children: response.data.data.instance._id }
-      );
+      await api.post(`/engrams/children/${currentEngramId}`, {
+        children: response.data.data.instance._id,
+      });
       // Update
       props.forceUpdate();
     } catch (err) {}
   }, [currentLaneId, currentEngramId, props]);
+
+  // Add new mermaid instance handler =====================================
+  const addNewMermaidInstanceHandler = useCallback(async () => {
+    try {
+      // Create new instance
+      const response = await api.post("/instances", {
+        type: "mermaid",
+        owner: currentLaneId,
+      });
+      // Check for response status
+      if (!response.status === 201) {
+        throw new Error("Error creating instance!");
+      }
+      // Add new children to engram
+      await api.post(`/engrams/children/${currentEngramId}`, {
+        children: response.data.data.instance._id,
+      });
+      // Update
+      props.forceUpdate();
+    } catch (err) {}
+  }, [currentLaneId, currentEngramId, props]);
+
+  // Add new photo instance handler =======================================
 
   // JSX ==================================================================
   return (
@@ -51,8 +73,16 @@ function FloatingMenu(props) {
         onClickHandler={addNewTextInstanceHandler}
         img={imgText}
       />
-      <FloatingButton img={imgMenu} />
-      <FloatingButton img={imgPicture} />
+      <FloatingButton
+        onClickHandler={addNewMermaidInstanceHandler}
+        img={imgMenu}
+      />
+      <FloatingButtonUpload
+        currentEngramId={currentEngramId}
+        currentLaneId={currentLaneId}
+        img={imgPicture}
+      />
+
       <FloatingButton img={imgHead} />
       <FloatingButton img={imgClose} />
       <FloatingButton img={imgLock} />
@@ -72,7 +102,6 @@ const StyledContainer = styled.div`
   gap: 13px;
   padding: 8px 0;
 
-  /* border: 4px solid black; */
   background-color: rgba(0, 0, 0, 0);
   box-sizing: border-box;
   position: absolute;

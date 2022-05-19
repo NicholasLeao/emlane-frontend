@@ -25,5 +25,4 @@ const StyledDiv = styled.div`
   align-items: center;
   justify-content: center;
   padding-top: 40px;
-  
 `;
