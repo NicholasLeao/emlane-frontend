@@ -1,20 +1,18 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { LaneContext } from "../../contexts/laneContext";
 import { useNavigate } from "react-router-dom";
 
 function Lane(props) {
   const { laneElement } = props;
-  const { currentLane, setCurrentLane } = useContext(LaneContext);
+  const { setCurrentLane } = useContext(LaneContext);
   const navigate = useNavigate();
 
   const clickHandler = () => {
-    setCurrentLane(laneElement._id);
+    setCurrentLane(laneElement);
     navigate("/workspace/no-engram");
   };
-  // console.log("🥰", laneElement);
 
   return (
     <StyledContainer>

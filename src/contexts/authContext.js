@@ -3,6 +3,7 @@ import { createContext, useState, useEffect } from "react";
 const AuthContext = createContext({ token: "", user: {} });
 
 function AuthContextComponent(props) {
+  
   const [loggedInUser, setLoggedInUser] = useState({
     token: "",
     user: {},
@@ -12,12 +13,17 @@ function AuthContextComponent(props) {
     const storedUser = localStorage.getItem("emlane-user");
     const parsedStoredUser = JSON.parse(storedUser || '""');
 
-    if (parsedStoredUser.token) {
+    if (parsedStoredUser) {
       setLoggedInUser(parsedStoredUser);
     } else {
-      setLoggedInUser(null);
+      setLoggedInUser({
+        token: "",
+        user: {},
+      });
     }
   }, []);
+
+  useEffect(() => console.log("👽", loggedInUser), [loggedInUser]);
 
   // useEffect(() => console.log("😁", loggedInUser), [loggedInUser]);
 

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import Lane from "./Lane";
 import { useState, useEffect, useCallback, useContext } from "react";
-import { useParams } from "react-router-dom";
 import { AuthContext } from "../../contexts/authContext";
 import axios from "axios";
 

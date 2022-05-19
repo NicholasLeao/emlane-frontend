@@ -6,9 +6,8 @@ import { motion } from "framer-motion";
 import { LaneContext } from "../contexts/laneContext";
 
 function Sidebar() {
-  const [_, forceUpdate] = useState(false);
   //  Define current lane
-  const { currentLane, setCurrentLane } = useContext(LaneContext);
+  const { currentLane } = useContext(LaneContext);
 
   //  Fetch lane array ====================================================
   const [laneArray, setLaneArray] = useState([]);

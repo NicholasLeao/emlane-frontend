@@ -4,12 +4,10 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../contexts/authContext";
 import { ModalContext } from "../contexts/modalContext";
 import { LaneContext } from "../contexts/laneContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 const NavLoggedIn = (props) => {
-  
   const { id: currentLaneId } = useContext(LaneContext).currentLane;
 
   return (
@@ -58,6 +56,14 @@ function Navbar() {
     navigate("/");
   }
 
+  // Track if user is logged in ===========================================
+  const [loggedInUserBool, setLoggedInUserBool] = useState(false);
+  useEffect(() => {
+    setLoggedInUserBool(
+      loggedInUser.token !== undefined && loggedInUser.token !== ""
+    );
+  }, [loggedInUser]);
+
   //  JSX =================================================================
   return (
     <>
@@ -66,7 +72,7 @@ function Navbar() {
           <h2>emlane</h2>
         </Link>
         <div className="ui-ul">
-          {loggedInUser ? (
+          {loggedInUserBool ? (
             <NavLoggedIn handleLogout={handleLogout} />
           ) : (
             <NavLoggedOut

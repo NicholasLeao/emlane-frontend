@@ -6,7 +6,6 @@ import { useState } from "react";
 import Lanes from "./Lanes";
 
 function LaneScreen() {
-  const { id } = useParams();
   const [updateToken, forceUpdateFn] = useState(false);
   const forceUpdate = () => forceUpdateFn((s) => !s);
   //  JSX =================================================================

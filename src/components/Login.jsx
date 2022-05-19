@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/authContext";
 import { ModalContext } from "../contexts/modalContext";
 import { useContext } from "react";
+import { LaneContext } from "../contexts/laneContext";
 import Backdrop from "./Backdrop";
 function Login() {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ function Login() {
   const [formSubmitState, setFormSubmitState] = useState({});
   const { setLoggedInUser } = useContext(AuthContext);
   const { modalHandler } = useContext(ModalContext);
+  const { setCurrentLane } = useContext(LaneContext);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -37,23 +39,35 @@ function Login() {
   };
 
   const postSubmitState = useCallback(async () => {
-    if (!formSubmitState.email) return;
+    try {
+      if (!formSubmitState.email) return;
 
-    const response = await axios.post(
-      "http://127.0.0.1:8000/users/login",
-      formSubmitState
-    );
+      const response = await axios.post(
+        "http://127.0.0.1:8000/users/login",
+        formSubmitState
+      );
 
-    if (response.status === 200) {
-      //  Handle response
-      response.data.status = undefined;
-      setLoggedInUser({ ...response.data.user });
-      localStorage.setItem("emlane-user", JSON.stringify(response.data));
-      //  Handle UI
-      modalHandler("none");
-      navigate("/");
+      if (response.status === 200) {
+        //  Handle response
+        response.data.status = undefined;
+        setLoggedInUser({ ...response.data.user });
+        localStorage.setItem("emlane-user", JSON.stringify(response.data));
+        //  Handle current lane
+        setCurrentLane(response.data.user.children[0]);
+        //  Handle UI
+        modalHandler("none");
+        navigate("/");
+      }
+    } catch (err) {
+      console.log(err);
     }
-  }, [formSubmitState, navigate, setLoggedInUser, modalHandler]);
+  }, [
+    formSubmitState,
+    navigate,
+    setLoggedInUser,
+    modalHandler,
+    setCurrentLane,
+  ]);
 
   useEffect(() => {
     postSubmitState();
