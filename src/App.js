@@ -30,7 +30,7 @@ function App() {
           path="/profile"
           element={<AuthRoute component={ProfileScreen} />}
         />
-        <Route path="*" element={<NoPageHere></NoPageHere>} />
+        <Route path="*" element={<NoPageHere />} />
       </Routes>
     </div>
   );

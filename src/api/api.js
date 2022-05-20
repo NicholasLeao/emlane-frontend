@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const apiURLs = {
-  development: "http://localhost:8000",
+  // development: "http://localhost:8000",
+  development: "https://emlane.herokuapp.com/",
   production: "https://emlane.herokuapp.com/",
 };
 
