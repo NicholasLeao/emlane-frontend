@@ -48,6 +48,12 @@ const StyledContainer = styled.div`
     background-color: #8fc0a9;
     border-color: #8fc0a9;
   }
+  & .green-no-margin {
+    color: white;
+    /* margin-top: 15px; */
+    background-color: #8fc0a9;
+    border-color: #8fc0a9;
+  }
   & .purple-outline {
     background-color: white;
     border-color: #8338ec;

@@ -30,7 +30,7 @@ const NavLoggedIn = (props) => {
       </li>
       <li>
         <Link to="/profile">
-          <FormButton theme="green">Profile</FormButton>
+          <FormButton theme="green-no-margin">Profile</FormButton>
         </Link>
       </li>
       <li>
