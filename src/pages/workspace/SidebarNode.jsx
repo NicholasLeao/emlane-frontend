@@ -12,10 +12,6 @@ function SidebarNode(props) {
           whileHover={{ scale: 1 }}
           whileTap={{
             scale: 0.8,
-            rotate: -180,
-            borderRadius: "100%",
-            // borderColor: "#E9766F",
-            // color: "#E9766F",
           }}
         >
           <p className="number">{props.idx}</p>
@@ -41,6 +37,7 @@ const StyledBtn = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: "PP Neue Machina";
 
   & .number {
     background-color: rgba(0, 0, 0, 0);

@@ -17,6 +17,7 @@ function FloatingButton(props) {
         boxShadow: "0px 0px 0px 0px #000000",
         borderRadius: "4px",
       }}
+      
     >
       <button onClick={props.onClickHandler}>
         <img src={props.img} alt="Hello" />
