@@ -6,10 +6,18 @@ import { ModalContext } from "../contexts/modalContext";
 
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import LanguageButton from "./LanguageButton";
 
 const NavLoggedIn = (props) => {
+  const { t, i18n } = useTranslation();
+
+  // =========================================================
   return (
     <ul>
+      <li>
+        <FormButton>English ▼</FormButton>
+      </li>
       <li>
         <Link to={`/workspace/no-engram`}>
           <FormButton>Workspace</FormButton>
@@ -28,23 +36,29 @@ const NavLoggedIn = (props) => {
     </ul>
   );
 };
-const NavLoggedOut = (props) => (
-  <ul>
-    <li>
-      <FormButton>English ▼</FormButton>
-    </li>
-    <li>
-      <FormButton onClick={props.loginHandler}>Log in</FormButton>
-    </li>
-    <li>
-      <FormButton onClick={props.signupHandler} theme="purple">
-        Signup
-      </FormButton>
-    </li>
-  </ul>
-);
+const NavLoggedOut = (props) => {
+  const { t, i18n } = useTranslation();
+
+  // =========================================================
+  return (
+    <ul>
+      <li>
+        <LanguageButton  />
+      </li>
+      <li>
+        <FormButton onClick={props.loginHandler}>Log in</FormButton>
+      </li>
+      <li>
+        <FormButton onClick={props.signupHandler} theme="purple">
+          Signup
+        </FormButton>
+      </li>
+    </ul>
+  );
+};
 
 function Navbar() {
+  const { t, i18n } = useTranslation();
   const { loggedInUser, setLoggedInUser } = useContext(AuthContext);
   const { modalHandler } = useContext(ModalContext);
 

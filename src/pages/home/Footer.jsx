@@ -1,81 +1,81 @@
 import styled from "styled-components";
-import FormButton from "../../components/FormButton";
-import { AuthContext } from "../../contexts/authContext";
-import { ModalContext } from "../../contexts/modalContext";
-import { useContext } from "react";
-import { motion, useViewportScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
-
+import { Link } from "react-router-dom";
 import StarIllustrationTwo from "../../assets/illustrations/star-two.png";
 import StarIllustration from "../../assets/illustrations/star.png";
-import IllustrationComponent from "./IllustrationComponent";
-import Footer from "./Footer";
 
-function Home() {
+function Footer() {
   const { t } = useTranslation();
-
-  const { loggedInUser } = useContext(AuthContext);
-  const { modalHandler } = useContext(ModalContext);
 
   return (
     <StyledDiv>
-      <section className="hero">
-        <h1>
-          {t("It's okay to forget.")}
-          <br />
-          {t("It's fun to remember.")}
-        </h1>
-
-        <motion.div
-          drag
-          className="p-container"
-          dragConstraints={{ left: 2, right: 2, top: 2, bottom: 2 }}
-          dragElastic={0.2}
-          dragSnapToOrigin={true}
-        >
-          <p>
-            {t("A simple tool can help you keep information for later.")}
-            <br /> {t("Edit, save and review your content wherever you are.")}
-            <br /> {t("Engage with your notes in a simpler way.")}
-          </p>
-        </motion.div>
+      <section className="footer">
+        <div className="box">
+          <h2>{t("Social")}</h2>
+          <ul>
+            <a href="http://github.com">
+              <li>Github</li>
+            </a>
+            <a href="http://linkedin.com">
+              <li>Linkedin</li>
+            </a>
+            <a href="http://twiiter.com">
+              <li>Twitter</li>
+            </a>
+          </ul>
+        </div>
+        <div className="box">
+          <h2>{t("Explanation")}</h2>
+          <ul>
+            <Link to="/explanation/why-emlane">
+              <li>{t("Why emlane?")}</li>
+            </Link>
+            <Link to="/explanation/how-emlane">
+              <li>{t("How to use emlane?")}</li>
+            </Link>
+            <Link to="/explanation/design-research">
+              <li>{t("Design research")}</li>
+            </Link>
+          </ul>
+        </div>
+        <div className="box">
+          <h2>{t("Techonology")}</h2>
+          <ul>
+            <a href="https://reactjs.org/">
+              <li>React</li>
+            </a>
+            <a href="https://nodejs.org/en/">
+              <li>Node</li>
+            </a>
+            <a href="https://www.framer.com/motion/">
+              <li>Framer Motion</li>
+            </a>
+            <Link to="/technology/packages">
+              <li>Packages</li>
+            </Link>
+          </ul>
+        </div>
       </section>
-      {/* ============================================================ */}
-      <IllustrationComponent />
-      <Footer />
-
-      {/* ==================== MODAL =========================== */}
-      {!loggedInUser && (
-        <FormButton
-          onClick={() => modalHandler("signup")}
-          theme="purple-outline"
-          nameProperty="signup"
-        >
-          {t("Create a free account!")}
-        </FormButton>
-      )}
     </StyledDiv>
   );
 }
 
-export default Home;
+export default Footer;
 
 const StyledDiv = styled.div`
   text-align: center;
-  overflow-x: hidden;
+  margin-top: 150px;
   font-family: "PP Neue Machina";
 
   & h1 {
     font-size: 52px;
     font-weight: 800;
     margin-bottom: 36px;
-    font-family: "PP Neue Machina";
   }
 
   & p {
     font-size: 20px;
     margin-bottom: 28px;
-    font-family: "PP Neue Machina";
   }
 
   & .hero {
@@ -108,7 +108,6 @@ const StyledDiv = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    font-family: "PP Neue Machina";
 
     & .character-illustration {
       height: 70%;
@@ -131,7 +130,6 @@ const StyledDiv = styled.div`
       font-size: 52px;
       color: white;
       background-color: rgba(0, 0, 0, 0);
-      font-family: "PP Neue Machina";
     }
   }
 
@@ -146,6 +144,7 @@ const StyledDiv = styled.div`
     justify-content: space-between;
     padding: 20px 120px;
     border: 4px solid black;
+    font-family: "PP Neue Machina";
 
     background-color: #ffc700;
     height: 300px;
@@ -170,6 +169,9 @@ const StyledDiv = styled.div`
       background-color: rgba(0, 0, 0, 0);
     }
     & li {
+      font-family: "PP Neue Machina";
+      text-decoration: none;
+      list-style: none;
       font-size: 22px;
       margin-bottom: 12px;
       text-decoration: none;

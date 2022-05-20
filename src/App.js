@@ -8,6 +8,8 @@ import AuthRoute from "./components/AuthRoute";
 import { ModalContext } from "./contexts/modalContext";
 import { useContext } from "react";
 import LaneScreen from "./pages/lanes/LaneScreen";
+import NoPageHere from "./pages/nopagehere/NoPageHere";
+
 
 function App() {
   const { modalState } = useContext(ModalContext);
@@ -25,6 +27,7 @@ function App() {
         />
         <Route path="/lanes" element={<AuthRoute component={LaneScreen} />} />
         <Route path="/profile" element={<AuthRoute component={<></>} />} />
+        <Route path="*" element={<NoPageHere></NoPageHere>} />
       </Routes>
     </div>
   );
