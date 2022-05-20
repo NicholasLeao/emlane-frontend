@@ -40,7 +40,7 @@ function Lane(props) {
         className="lane"
       >
         <h2>{laneElement.title}</h2>
-        <p>💠0{laneElement.length} Engrams </p>
+        <p>💠{laneElement.children.length} Engrams </p>
         <p className="date">{laneElement.createdAt}</p>
       </motion.div>
     </StyledContainer>

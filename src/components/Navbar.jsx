@@ -16,7 +16,7 @@ const NavLoggedIn = (props) => {
   return (
     <ul>
       <li>
-        <FormButton>English ▼</FormButton>
+        <LanguageButton />
       </li>
       <li>
         <Link to={`/workspace/no-engram`}>
@@ -26,6 +26,11 @@ const NavLoggedIn = (props) => {
       <li>
         <Link to="/lanes">
           <FormButton>Lanes</FormButton>
+        </Link>
+      </li>
+      <li>
+        <Link to="/profile">
+          <FormButton theme="green">Profile</FormButton>
         </Link>
       </li>
       <li>

@@ -85,6 +85,7 @@ function MermaidInstance(props) {
             whileHover={{
               scale: 1.005,
             }}
+            className="btn"
             onClick={() => setTextAreaVisible((s) => !s)}
           >
             <p>{textAreaVisible ? "HIDE" : "SHOW"}</p>
@@ -115,6 +116,9 @@ const StyledDiv = styled.div`
     padding: 10px 15px;
     box-shadow: 3px 3px 0px 1px #000000;
   }
+  & .btn {
+    border: 2px solid #8fc0a9;
+  }
 
   & button {
     margin-top: 5px;
@@ -134,8 +138,8 @@ const StyledDiv = styled.div`
     box-sizing: border-box;
   }
   & .is-diff {
-    border: gray;
-    color: gray;
+    border: #8fc0a9;
+    color: #8fc0a9;
   }
   & .text-area {
     width: 100%;
