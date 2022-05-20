@@ -61,6 +61,7 @@ function Sidebar() {
             whileTap={{ scale: 0.8 }}
             className="add-instance"
             onClick={handleAddEngram}
+            style={{ marginBottom: "20px" }}
           >
             <p>+</p>
           </motion.button>
