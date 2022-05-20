@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/authContext";
 import { ModalContext } from "../contexts/modalContext";
 import { LaneContext } from "../contexts/laneContext";
-import {api} from "../api/api"
+import { api } from "../api/api";
 
 function Login() {
   const navigate = useNavigate();
@@ -45,10 +45,7 @@ function Login() {
     try {
       if (!formSubmitState.email) return;
 
-      const response = await api.post(
-        "/users/login",
-        formSubmitState
-      );
+      const response = await api.post("/users/login", formSubmitState);
 
       if (response.status === 200) {
         //  Handle response
@@ -75,7 +72,7 @@ function Login() {
   useEffect(() => {
     postSubmitState();
   }, [formSubmitState, postSubmitState]);
-  
+
   //  JSX =================================================================
   return (
     <>
@@ -115,6 +112,7 @@ function Login() {
               onClick={submitHandler}
               nameProperty="confirm"
               coloured={true}
+              theme="green"
             >
               Confirm
             </FormButton>
@@ -143,6 +141,10 @@ const StyledDiv = styled.div`
     margin-top: 15px;
   }
 
+  & .btn {
+    margin-top: 25px;
+  }
+
   & .login-modal {
     display: flex;
     flex-direction: column;
@@ -152,5 +154,10 @@ const StyledDiv = styled.div`
     width: 350px;
     padding: 35px 20px 40px 20px;
     border-radius: 12px;
+  }
+
+  & .confirm {
+    margin-top: 10px;
+    background-color: #8fc0a9;
   }
 `;

@@ -109,7 +109,7 @@ const StyledDiv = styled.div`
   & .instance {
     width: 100%;
 
-    border: 4px solid #8059eb;
+    border: 4px solid #8fc0a9;
     border-radius: 8px;
     box-sizing: border-box;
     padding: 10px 15px;
