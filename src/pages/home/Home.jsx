@@ -70,6 +70,7 @@ const StyledDiv = styled.div`
     font-weight: 800;
     margin-bottom: 36px;
     font-family: "PP Neue Machina";
+    color: #8338EC;
   }
 
   & p {
@@ -98,7 +99,7 @@ const StyledDiv = styled.div`
   }
 
   & .illustration {
-    background-color: #d63939;
+    background-color: #FB5607;
     border: 8px solid black;
     margin: 50px 50px;
     border-radius: 25%;
@@ -147,7 +148,7 @@ const StyledDiv = styled.div`
     padding: 20px 120px;
     border: 4px solid black;
 
-    background-color: #ffc700;
+    background-color: #FFBE0B;
     height: 300px;
     gap: 15px;
 

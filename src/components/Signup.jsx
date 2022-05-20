@@ -117,6 +117,7 @@ function Login() {
             nameProperty="confirm"
             onClick={submitHandler}
             coloured={true}
+            theme={"green"}
           >
             Confirm
           </FormButton>

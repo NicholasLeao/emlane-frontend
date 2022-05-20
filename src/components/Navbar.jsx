@@ -43,7 +43,7 @@ const NavLoggedOut = (props) => {
   return (
     <ul>
       <li>
-        <LanguageButton  />
+        <LanguageButton />
       </li>
       <li>
         <FormButton onClick={props.loginHandler}>Log in</FormButton>
@@ -85,7 +85,14 @@ function Navbar() {
     <>
       <StyledNav>
         <Link to="/">
-          <h2>emlane</h2>
+          <h2
+            style={{
+              fontFamily: "PP Neue Machina",
+              fontSize: "28px",
+            }}
+          >
+            emlane
+          </h2>
         </Link>
         <div className="ui-ul">
           {loggedInUserBool ? (
