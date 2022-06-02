@@ -8,7 +8,6 @@ import { AuthContext } from "../../contexts/authContext";
 import { api } from "../../api/api";
 
 // Images
-import imgClose from "../../assets/images/icon_close.svg";
 import imgHead from "../../assets/images/icon_head.svg";
 import imgLock from "../../assets/images/icon_lock.svg";
 import imgLock2 from "../../assets/images/icon_lock2.svg";
@@ -19,9 +18,13 @@ import imgTrash from "../../assets/images/icon_trash.svg";
 
 function FloatingMenuNav(props) {
   //  User Ids ============================================================
-  const { id: currentEngramId } = useParams();
-  const { id: currentLaneId } = useContext(LaneContext).currentLane;
-  const { _id: currentUserId } = useContext(AuthContext).loggedInUser.user;
+  // const { id: currentEngramId } = useParams();
+  // const { id: currentLaneId } = useContext(LaneContext).currentLane;
+  const userContext = useContext(AuthContext);
+  let currentUserId = "";
+  if (userContext.loggedInUser.user) {
+    currentUserId = userContext.loggedInUser.user._id;
+  }
 
   //  Add new text instance ===============================================
   const addNewLaneHandler = useCallback(async () => {
@@ -53,7 +56,6 @@ function FloatingMenuNav(props) {
       <FloatingButton img={imgMenu} />
       <FloatingButton img={imgPicture} />
       <FloatingButton img={imgHead} />
-      <FloatingButton img={imgClose} />
       <FloatingButton img={imgLock} />
       <FloatingButton img={imgLock2} />
       <FloatingButton img={imgTrash} />

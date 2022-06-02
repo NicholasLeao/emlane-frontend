@@ -17,7 +17,11 @@ function Workspace() {
         <Sidebar />
         <Canvas>
           <FloatingMenu forceUpdate={forceUpdate} />
-          <Instances updateToken={updateToken} engramId={id} />
+          <Instances
+            forceUpdate={forceUpdate}
+            updateToken={updateToken}
+            engramId={id}
+          />
         </Canvas>
       </div>
     </StyledDiv>

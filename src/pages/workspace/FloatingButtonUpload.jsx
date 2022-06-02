@@ -53,6 +53,8 @@ function FloatingButtonUpload(props) {
       await api.post(`/engrams/children/${props.currentEngramId}`, {
         children: response.data.data.instance._id,
       });
+      // Cleanup
+      setImgUrl("")
       // Update
       props.forceUpdate();
     } catch (err) {}
@@ -61,6 +63,7 @@ function FloatingButtonUpload(props) {
   useEffect(() => {
     if (!imgUrl.length) return;
     addNewImageInstanceHandler();
+    console.log("😚 ADD NEW CHILDREN")
   }, [imgUrl, addNewImageInstanceHandler]);
 
   return (

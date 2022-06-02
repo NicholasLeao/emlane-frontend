@@ -1,21 +1,23 @@
 import styled from "styled-components";
 import TextBox from "./TextBox";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useContext } from "react";
+import { DeleteContext } from "../../contexts/deleteContext";
 import { api } from "../../api/api";
 import React from "react";
 import Mermaid from "./MermaidChart";
 import { motion } from "framer-motion";
-
+import InstanceDeleteButton from "../../components/InstanceDeleteButton";
 function MermaidInstance(props) {
+  const { forceUpdate } = props;
+  const { deleteState } = useContext(DeleteContext);
   // lifted state from TextBox ============================================
   const [instanceText, setInstanceText] = useState("");
-  const [textAreaVisible, setTextAreaVisible] = useState(true);
+  const [textAreaVisible, setTextAreaVisible] = useState(false);
   useEffect(() => setInstanceText(props.instanceEl.content), []);
 
   const handleChange = (e) => {
     setInstanceText(e.target.value);
   };
-  useEffect(() => console.log(instanceText), [instanceText]);
 
   // Save to server =======================================================
   const saveToServer = useCallback(async () => {
@@ -39,24 +41,8 @@ function MermaidInstance(props) {
     return () => {
       clearTimeout(timerID);
     };
-  }, [instanceText]);
+  }, [instanceText, saveToServer, props.instanceEl.content]);
 
-  // // Parse HTML ===========================================================
-  // const parseContentEditable = (str) => {
-  //   // console.log(str);
-  //   const parse5 = require("parse5");
-  //   const document = parse5.parse(str);
-  //   const elArr = document.childNodes[0].childNodes[1].childNodes;
-  //   let newStr = "";
-  //   if (elArr) {
-  //     newStr = elArr
-  //       .filter((el) => el.nodeName === "#text")
-  //       .map((el) => el.value)
-  //       .join("\n");
-  //   }
-  //   console.log(newStr);
-  //   return newStr;
-  // };
   // JSX ==================================================================
   return (
     <StyledDiv>
@@ -93,6 +79,12 @@ function MermaidInstance(props) {
         </div>
         <Mermaid className="mermaid" chart={props.instanceEl.content} />
       </div>
+      {deleteState && (
+        <InstanceDeleteButton
+          forceUpdate={forceUpdate}
+          instanceId={props.instanceEl._id}
+        />
+      )}
     </StyledDiv>
   );
 }
@@ -103,6 +95,10 @@ const StyledDiv = styled.div`
   width: 100%;
   border-radius: 8px;
 
+  display: flex;
+  gap: 15px;
+  background-color: rgba(0, 0, 0, 0);
+
   & .mermaid {
     margin-top: 10px;
   }
@@ -110,17 +106,17 @@ const StyledDiv = styled.div`
   & .instance {
     width: 100%;
 
-    border: 4px solid #8fc0a9;
+    border: 4px solid #000000;
     border-radius: 8px;
     box-sizing: border-box;
     padding: 10px 15px;
     box-shadow: 3px 3px 0px 1px #000000;
   }
   & .btn {
-    border: 2px solid #8fc0a9;
+    border: 2px solid #000000;
   }
 
-  & button {
+  & .btn {
     margin-top: 5px;
     padding: 5px;
     border-radius: 4px;
