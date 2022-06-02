@@ -12,9 +12,10 @@ function Sidebar() {
   //  Fetch lane array ====================================================
   const [laneArray, setLaneArray] = useState([]);
   const fetchLaneHandler = useCallback(async () => {
+    if (currentLane.id === undefined) return;
+
     const response = await api.get(`/lanes/children/${currentLane.id}`);
     setLaneArray(response.data.children);
-    // console.log("🌑", response.data);
   }, [currentLane.id]);
 
   useEffect(() => {

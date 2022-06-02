@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Instance from "./Instance";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useContext } from "react";
+import { DeleteContext } from "../../contexts/deleteContext";
 import { useParams } from "react-router-dom";
 import { api } from "../../api/api";
 import MermaidInstance from "./MermaidInstance";
@@ -8,7 +9,8 @@ import PhotoInstance from "./PhotoInstance";
 
 function Instances(props) {
   const { id: currentEngramId } = useParams();
-
+  const { deleteState } = useContext(DeleteContext);
+  const { forceUpdate } = props;
   //  Instance fetch =========================================================
   const [instanceArray, setInstanceArray] = useState([]);
 
@@ -34,11 +36,32 @@ function Instances(props) {
       {currentEngramId !== "no-engram" &&
         instanceArray.map((el) => {
           if (el.type === "text")
-            return <Instance instanceEl={el} key={`${Math.random()}`} />;
+            return (
+              <Instance
+                forceUpdate={forceUpdate}
+                toggleDelete={deleteState}
+                instanceEl={el}
+                key={`${Math.random()}`}
+              />
+            );
           if (el.type === "mermaid")
-            return <MermaidInstance instanceEl={el} key={`${Math.random()}`} />;
+            return (
+              <MermaidInstance
+                forceUpdate={forceUpdate}
+                toggleDelete={deleteState}
+                instanceEl={el}
+                key={`${Math.random()}`}
+              />
+            );
           if (el.type === "picture")
-            return <PhotoInstance instanceEl={el} key={`${Math.random()}`} />;
+            return (
+              <PhotoInstance
+                forceUpdate={forceUpdate}
+                toggleDelete={deleteState}
+                instanceEl={el}
+                key={`${Math.random()}`}
+              />
+            );
           else return "";
         })}
     </StyledDiv>

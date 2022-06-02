@@ -1,13 +1,15 @@
 import styled from "styled-components";
 import TextBox from "./TextBox";
-import { useState, useEffect, useCallback } from "react";
+import { DeleteContext } from "../../contexts/deleteContext";
+import { useState, useEffect, useCallback, useContext } from "react";
 import { api } from "../../api/api";
+import InstanceDeleteButton from "../../components/InstanceDeleteButton";
 
 function Instance(props) {
-  
   // lifted state from TextBox ============================================
   const [instanceText, setInstanceText] = useState("");
-
+  const { deleteState } = useContext(DeleteContext);
+  const { forceUpdate } = props;
   // Save to server =======================================================
   const saveToServer = useCallback(async () => {
     try {
@@ -44,10 +46,14 @@ function Instance(props) {
           instanceContent={props.instanceEl.content}
           setHandler={setInstanceText}
         ></TextBox>
-        {/* <button onClick={clickHandler}>
-          <p>SAVE</p>
-        </button> */}
       </div>
+
+      {deleteState && (
+        <InstanceDeleteButton
+          forceUpdate={forceUpdate}
+          instanceId={props.instanceEl._id}
+        />
+      )}
     </StyledDiv>
   );
 }
@@ -57,7 +63,10 @@ export default Instance;
 const StyledDiv = styled.div`
   width: 100%;
   border-radius: 8px;
-  /* height: 150px; */
+
+  display: flex;
+  gap: 15px;
+  background-color: rgba(0, 0, 0, 0);
 
   & .instance {
     width: 100%;

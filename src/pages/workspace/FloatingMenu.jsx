@@ -4,10 +4,10 @@ import { useCallback, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { LaneContext } from "../../contexts/laneContext";
 import { AuthContext } from "../../contexts/authContext";
+import { DeleteContext } from "../../contexts/deleteContext";
 import { api } from "../../api/api";
 import FloatingButtonUpload from "./FloatingButtonUpload";
 
-import imgClose from "../../assets/images/icon_close.svg";
 import imgHead from "../../assets/images/icon_head.svg";
 import imgLock from "../../assets/images/icon_lock.svg";
 import imgLock2 from "../../assets/images/icon_lock2.svg";
@@ -21,6 +21,9 @@ function FloatingMenu(props) {
   const { id: currentEngramId } = useParams();
   const { id: currentLaneId } = useContext(LaneContext).currentLane;
   const { _id: currentUserId } = useContext(AuthContext).loggedInUser.user;
+
+  // Toggle delete context handler ========================================
+  const { deleteHandler } = useContext(DeleteContext);
 
   //  Add new text instance ===============================================
   const addNewTextInstanceHandler = useCallback(async () => {
@@ -64,8 +67,6 @@ function FloatingMenu(props) {
     } catch (err) {}
   }, [currentLaneId, currentEngramId, props]);
 
-  // Add new photo instance handler =======================================
-
   // JSX ==================================================================
   return (
     <StyledContainer>
@@ -81,13 +82,13 @@ function FloatingMenu(props) {
         currentEngramId={currentEngramId}
         currentLaneId={currentLaneId}
         img={imgPicture}
+        forceUpdate={props.forceUpdate}
       />
 
       <FloatingButton img={imgHead} />
-      <FloatingButton img={imgClose} />
       <FloatingButton img={imgLock} />
       <FloatingButton img={imgLock2} />
-      <FloatingButton img={imgTrash} />
+      <FloatingButton img={imgTrash} onClickHandler={deleteHandler} />
     </StyledContainer>
   );
 }

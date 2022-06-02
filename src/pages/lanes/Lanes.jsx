@@ -5,13 +5,19 @@ import { AuthContext } from "../../contexts/authContext";
 import { api } from "../../api/api";
 
 function Lanes(props) {
-  const { _id: currentUserId } = useContext(AuthContext).loggedInUser.user;
+  const userContext = useContext(AuthContext);
+  let currentUserId = "";
+  if (userContext.loggedInUser.user) {
+    currentUserId = userContext.loggedInUser.user._id;
+  }
 
   //  Instance fetch ======================================================
   const [laneArray, setLaneArray] = useState([]);
 
   const fetchLanes = useCallback(async () => {
     try {
+      if (!currentUserId) return;
+      console.log("🤡", currentUserId);
       const response = await api.get(`/users/children/${currentUserId}`);
       if (response) {
         setLaneArray(response.data.children);
